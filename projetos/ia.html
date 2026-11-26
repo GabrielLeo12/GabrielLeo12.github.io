@@ -32,11 +32,32 @@
   <div class="kpi"><b>15% → 35%</b><span>de júnior para sênior: quanto o pedido de IA cresce para Analista no Brasil</span></div>
   <div class="kpi"><b>41%</b><span>das vagas que pedem IA citam IA generativa / LLMs, o tipo mais pedido</span></div>
  </div>
+ <div class="cta"><a class="btn p" href="#explorar">Explorar o dashboard interativo ↓</a></div>
 </div></header>
 
 <main>
 <section class="band sec"><div class="wrap">
  <figure class="shot"><img src="../img/ia-capa.webp" width="1400" height="787" alt="Resumo do estudo: 1 em cada 3 vagas de dados pede conhecimento em IA, com os percentuais por cargo no Brasil e nos EUA."></figure>
+</div></section>
+
+<section class="band sec" id="explorar"><div class="wrap">
+ <h2>Explore os dados</h2>
+ <div class="dash" id="dash">
+  <p class="lead">Escolha o país e o cargo. Todos os números e gráficos abaixo se atualizam. A linha fina sobre cada barra mostra a margem de erro (intervalo de confiança de 95%).</p>
+  <div class="filters">
+   <div class="fg"><span>País</span><div class="seg" id="f-pais"></div></div>
+   <div class="fg"><span>Cargo</span><div class="seg" id="f-cargo"></div></div>
+  </div>
+  <div class="tiles" id="tiles"></div>
+  <div class="dgrid">
+   <div class="dcard"><h4>Vagas que pedem IA, por cargo</h4><p class="sub" id="s-cargo">% das vagas de cada cargo</p><div class="legend" id="lg1"></div><div class="bars" id="b-cargo"></div></div>
+   <div class="dcard"><h4>Requisito, tarefa ou só diferencial?</h4><p class="sub">% das vagas, pelo jeito mais forte em que pedem IA</p><div class="legend" id="lg2"></div><div class="bars" id="b-forma"></div></div>
+   <div class="dcard"><h4>Júnior, pleno e sênior</h4><p class="sub" id="s-sen"></p><div class="legend" id="lg3"></div><div class="bars" id="b-sen"></div><p class="warn" id="w-sen" hidden></p></div>
+   <div class="dcard"><h4>Que IA as vagas pedem?</h4><p class="sub">Entre as vagas que pedem IA · uma vaga pode citar vários tipos</p><div class="legend" id="lg4"></div><div class="bars" id="b-tipo"></div></div>
+   <div class="dcard wide"><h4>Modelo de trabalho</h4><p class="sub" id="s-mod">% das vagas que pedem IA, por modelo de trabalho · todos os cargos</p><div class="legend" id="lg5"></div><div class="bars" id="b-mod"></div><p class="warn">Grupos com menos de 30 vagas ficam esmaecidos: a margem de erro é grande demais para tirar conclusão.</p></div>
+  </div>
+  <p class="note2">Fonte: 2.240 vagas públicas do Indeed Brasil e EUA, ago–nov/2026. Dados e código no <a href="https://github.com/GabrielLeo12/ia-vagas-dados" target="_blank" rel="noopener">GitHub</a>.</p>
+ </div>
 </div></section>
 
 <section class="band sec"><div class="wrap">
@@ -114,5 +135,86 @@
 </main>
 
 <footer><div class="wrap">© 2026 Gabriel Leonardelli · Dados: vagas públicas do Indeed Brasil e EUA</div></footer>
+<script src="../dash.js"></script>
+<script>
+{
+ const NOMES={Analista:'Analista de Dados',Cientista:'Cientista de Dados',Engenheiro:'Engenheiro de Dados',Todos:'Todos os cargos'};
+ const CURTO={Analista:'Analista',Cientista:'Cientista',Engenheiro:'Engenheiro',Todos:'Todos'};
+ const TIPO={'Ferramentas (ChatGPT, Copilot, Gemini, Claude)':'ChatGPT, Copilot e similares','Só "IA", sem especificar':'Só "IA", sem dizer qual','RAG / LangChain / vetores':'RAG / LangChain'};
+ const CORES={Brasil:'var(--c)',EUA:'var(--muted)'};
+ const st={pais:'Brasil',cargo:'Todos'};
+ const $=id=>document.getElementById(id);
+ let d=null;
+ const paises=()=>st.pais==='Comparar'?['Brasil','EUA']:[st.pais];
+ const leg=(el)=>{el.innerHTML=st.pais==='Comparar'?'<span><i style="background:var(--c)"></i>Brasil</span><span><i style="background:var(--muted);opacity:.55"></i>EUA</span>':'';};
+ const get=(t,f)=>d[t].find(r=>Object.entries(f).every(([k,v])=>r[k]===v));
+
+ function tiles(){
+  const ps=paises();
+  const val=(k,dig=0)=>ps.map(p=>{const r=get('cargo',{pais:p,cargo:st.cargo});return r?D.pct(r[k],dig):'–'}).join(' · ');
+  const r0=get('cargo',{pais:ps[0],cargo:st.cargo});
+  const ci=ps.length===1&&r0?`<small>margem: ${D.pct(r0.ic95_min)} a ${D.pct(r0.ic95_max)} · ${D.num(r0.vagas)} vagas</small>`:`<small>Brasil · EUA</small>`;
+  const t=[[val('pct_pede_ia'),'das vagas pedem conhecimento em IA',ci],[val('pct_requisito'),'pedem IA como requisito',''],[val('pct_tarefa'),'trazem IA como tarefa do dia a dia',''],[val('pct_so_diferencial'),'citam IA só como diferencial',''],[val('pct_cita_ml'),'citam Machine Learning (medido à parte)','']];
+  $('tiles').innerHTML=t.map(([b,s,x])=>`<div class="tile"><b>${D.esc(b)}</b><span>${D.esc(s)}</span>${x}</div>`).join('');
+ }
+ function porCargo(){
+  leg($('lg1'));
+  const cs=['Analista','Cientista','Engenheiro','Todos'];
+  $('s-cargo').textContent=st.pais==='Comparar'?'% das vagas de cada cargo · Brasil × EUA':'% das vagas de cada cargo · '+st.pais;
+  D.bars($('b-cargo'),cs.map(c=>{
+   const a=get('cargo',{pais:paises()[0],cargo:c}),b=st.pais==='Comparar'?get('cargo',{pais:'EUA',cargo:c}):null;
+   return {lab:CURTO[c],v:a.pct_pede_ia,v2:b?b.pct_pede_ia:null,lo:b?null:a.ic95_min,hi:b?null:a.ic95_max,
+    txt:b?`${D.pct(a.pct_pede_ia)} · ${D.pct(b.pct_pede_ia)}`:D.pct(a.pct_pede_ia),on:c===st.cargo,dim:st.cargo!=='Todos'&&c!==st.cargo&&c!=='Todos',
+    title:`${NOMES[c]}: ${a.pedem_ia} de ${a.vagas} vagas`};
+  }),{max:70});
+ }
+ function forma(){
+  const cor=['var(--c)','color-mix(in srgb,var(--c) 55%,var(--track))','color-mix(in srgb,var(--c) 25%,var(--track))'];
+  $('lg2').innerHTML=['Requisito','Tarefa do dia a dia','Só diferencial'].map((l,i)=>`<span><i style="background:${cor[i]}"></i>${l}</span>`).join('');
+  const cs=st.cargo==='Todos'?['Analista','Cientista','Engenheiro','Todos']:[st.cargo];
+  const linhas=[];cs.forEach(c=>paises().forEach(p=>linhas.push([c,p])));
+  const max=70,w=v=>v/max*100;
+  $('b-forma').innerHTML=linhas.map(([c,p])=>{const r=get('cargo',{pais:p,cargo:c});
+   return `<div class="brow" title="Requisito ${D.pct(r.pct_requisito,1)} · Tarefa ${D.pct(r.pct_tarefa,1)} · Só diferencial ${D.pct(r.pct_so_diferencial,1)}"><span class="lab">${D.esc(st.cargo!=='Todos'?p:(paises().length>1?CURTO[c]+' · '+p:CURTO[c]))}</span>
+   <span class="stack"><i style="width:${w(r.pct_requisito)}%;background:${cor[0]}"></i><i style="width:${w(r.pct_tarefa)}%;background:${cor[1]}"></i><i style="width:${w(r.pct_so_diferencial)}%;background:${cor[2]}"></i></span><span class="val">${D.pct(r.pct_pede_ia)}</span></div>`}).join('');
+ }
+ function sen(){
+  leg($('lg3'));
+  const c=st.cargo==='Todos'?'Analista':st.cargo;
+  $('s-sen').textContent=`% das vagas que pedem IA · ${NOMES[c]}`+(st.cargo==='Todos'?' (escolha um cargo para trocar)':'');
+  const ss=['Júnior','Pleno','Sênior'];let peq=[];
+  D.bars($('b-sen'),ss.map(s=>{
+   const a=get('senioridade',{pais:paises()[0],cargo:c,senioridade:s}),b=st.pais==='Comparar'?get('senioridade',{pais:'EUA',cargo:c,senioridade:s}):null;
+   [a,b].forEach(r=>{if(r&&r.vagas<50)peq.push(`${r.pais} ${s} (${r.vagas} vagas)`)});
+   return {lab:`${s}`,v:a.pct_pede_ia,v2:b?b.pct_pede_ia:null,lo:b?null:a.ic95_min,hi:b?null:a.ic95_max,
+    txt:b?`${D.pct(a.pct_pede_ia)} · ${D.pct(b.pct_pede_ia)}`:D.pct(a.pct_pede_ia),dim:!b&&a.vagas<50,title:`${s}: ${a.pedem_ia} de ${a.vagas} vagas`+(b?` · EUA: ${b.pedem_ia} de ${b.vagas}`:'')};
+  }),{max:80});
+  $('w-sen').hidden=!peq.length;
+  $('w-sen').textContent=peq.length?`Poucas vagas em: ${peq.join(', ')}. Com menos de 50 vagas, a margem de erro é grande; trate como indicação, não conclusão.`:'';
+ }
+ function tipo(){
+  leg($('lg4'));
+  const ts=[...new Set(d.tipo.map(r=>r.tipo_ia))];
+  const items=ts.map(t=>{const a=get('tipo',{pais:paises()[0],cargo:st.cargo,tipo_ia:t}),b=st.pais==='Comparar'?get('tipo',{pais:'EUA',cargo:st.cargo,tipo_ia:t}):null;
+   return {lab:TIPO[t]||t,v:a?a.pct_das_que_pedem_ia:0,v2:b?b.pct_das_que_pedem_ia:null,
+    txt:b?`${D.pct(a.pct_das_que_pedem_ia)} · ${D.pct(b.pct_das_que_pedem_ia)}`:D.pct(a.pct_das_que_pedem_ia),title:`${a.vagas} vagas`+(b?` · EUA: ${b.vagas}`:'')};});
+  items.sort((x,y)=>y.v-x.v);
+  D.bars($('b-tipo'),items,{max:70});
+ }
+ function modelo(){
+  leg($('lg5'));
+  $('s-mod').textContent='% das vagas que pedem IA, por modelo de trabalho · todos os cargos'+(st.cargo!=='Todos'?' (este corte não existe por cargo)':'');
+  const ms=['Remoto','Híbrido','Presencial','Não informado'];
+  D.bars($('b-mod'),ms.map(m=>{const a=get('modelo',{pais:paises()[0],modelo_trabalho:m}),b=st.pais==='Comparar'?get('modelo',{pais:'EUA',modelo_trabalho:m}):null;
+   return {lab:m,v:a.pct_pede_ia,v2:b?b.pct_pede_ia:null,lo:b?null:a.ic95_min,hi:b?null:a.ic95_max,
+    txt:b?`${D.pct(a.pct_pede_ia)} · ${D.pct(b.pct_pede_ia)}`:D.pct(a.pct_pede_ia),dim:a.vagas<30&&(!b||b.vagas<30),
+    title:`${m}: ${a.vagas} vagas`+(b?` · EUA: ${b.vagas} vagas`:'')};}),{max:70});
+ }
+ const draw=()=>{tiles();porCargo();forma();sen();tipo();modelo();};
+ D.seg($('f-pais'),[['Brasil','Brasil'],['EUA','EUA'],['Comparar','Brasil × EUA']],st.pais,v=>{st.pais=v;draw();});
+ D.seg($('f-cargo'),[['Todos','Todos'],['Analista','Analista'],['Cientista','Cientista'],['Engenheiro','Engenheiro']],st.cargo,v=>{st.cargo=v;draw();});
+ D.load('../dados/ia.json').then(j=>{d=j;draw();}).catch(()=>D.fail($('dash')));
+}
+</script>
 </body>
 </html>

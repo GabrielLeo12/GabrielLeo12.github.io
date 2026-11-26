@@ -32,9 +32,30 @@
   <div class="kpi"><b>46% × 43%</b><span>Python já aparece em mais vagas que Excel</span></div>
   <div class="kpi"><b>11%</b><span>das vagas são marcadas como remotas</span></div>
  </div>
+ <div class="cta"><a class="btn p" href="#explorar">Explorar o dashboard interativo ↓</a></div>
 </div></header>
 
 <main>
+<section class="band sec" id="explorar"><div class="wrap">
+ <h2>Explore os dados</h2>
+ <div class="dash" id="dash">
+  <p class="lead">Filtre por senioridade, estado ou vagas remotas. O ranking, os estados e as listas de vagas se atualizam. Quando há filtro, a barra cinza mostra o total de vagas, para comparar. "KPIs / Indicadores" fica fora do ranking, como explicado no método.</p>
+  <div class="filters" id="va-filtros"></div>
+  <div class="tiles" id="va-tiles"></div>
+  <div class="dgrid">
+   <div class="dcard"><h4>Skills mais pedidas</h4><p class="sub">% das vagas que citam cada skill · clique em uma skill para ver as vagas</p>
+    <div class="seg" id="va-cats" style="margin-bottom:14px"></div><div class="legend" id="va-rleg"></div>
+    <div class="bars" id="va-rank"></div><button type="button" class="dbtn" id="va-mais" style="margin-top:12px"></button></div>
+   <div style="display:grid;gap:16px;align-content:start;min-width:0">
+    <div class="dcard"><h4>Onde estão as vagas</h4><p class="sub">Estados com mais vagas neste recorte · clique para filtrar</p><div class="bars" id="va-uf"></div></div>
+    <div class="dcard"><h4>Senioridade</h4><p class="sub">% das vagas do recorte</p><div class="bars" id="va-dist"></div></div>
+   </div>
+   <div class="dcard wide" id="va-det"></div>
+  </div>
+  <p class="note2">Fonte: 572 vagas de Analista de Dados e BI do Indeed Brasil, jul–nov/2026. Os links levam ao anúncio original e podem ter expirado. Dados e código no <a href="https://github.com/GabrielLeo12/skills-analista-dados" target="_blank" rel="noopener">GitHub</a>.</p>
+ </div>
+</div></section>
+
 <section class="band sec"><div class="wrap">
  <h2>O que eu descobri</h2>
 
@@ -93,5 +114,18 @@
 </main>
 
 <footer><div class="wrap">© 2026 Gabriel Leonardelli · Dados: vagas públicas do Indeed Brasil</div></footer>
+<script src="../dash.js"></script>
+<script>
+D.vagas({url:'../dados/analista.json',
+ cols:{titulo:0,empresa:1,local:2,data:3,link:7,bits:8},
+ filters:[{key:'sen',label:'Senioridade',col:4,kind:'seg',all:'Todas',order:['Estágio','Júnior','Pleno','Sênior','Não informado']},
+          {key:'rem',label:'Modelo',col:5,kind:'seg',all:'Todas',order:[1,0],labels:{1:'Remotas',0:'Não remotas'}},
+          {key:'uf',label:'Estado',col:6,kind:'sel',all:'Todos os estados'}],
+ remoto:r=>r[5]===1,
+ dist:{col:4,order:['Estágio','Júnior','Pleno','Sênior','Não informado']},
+ extra:r=>r[4],
+ selDef:'SQL',
+ ids:{root:'dash',filters:'va-filtros',tiles:'va-tiles',cats:'va-cats',rankLeg:'va-rleg',rank:'va-rank',mais:'va-mais',uf:'va-uf',dist:'va-dist',det:'va-det'}});
+</script>
 </body>
 </html>

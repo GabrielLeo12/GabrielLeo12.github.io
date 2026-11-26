@@ -32,9 +32,33 @@
   <div class="kpi"><b>4º dia</b><span>A partir do 4º dia de atraso, a nota despenca para cerca de 2</span></div>
   <div class="kpi"><b>−26%</b><span>de recompra entre quem teve a 1ª compra atrasada</span></div>
  </div>
+ <div class="cta"><a class="btn p" href="#explorar">Explorar o dashboard interativo ↓</a></div>
 </div></header>
 
 <main>
+<section class="band sec" id="explorar"><div class="wrap">
+ <h2>Explore os dados</h2>
+ <div class="dash" id="dash">
+  <p class="lead">Escolha o período, a região ou o estado do cliente. Todos os indicadores e gráficos são recalculados a partir dos 98 mil pedidos do modelo que montei no Excel. No ranking de estados, clique em um estado para filtrar.</p>
+  <div class="filters">
+   <div class="fg"><span>De</span><select class="dsel" id="o-ini"></select></div>
+   <div class="fg"><span>Até</span><select class="dsel" id="o-fim"></select></div>
+   <div class="fg"><span>Região</span><div class="seg" id="o-reg"></div></div>
+   <div class="fg"><span>Estado</span><select class="dsel" id="o-uf"></select></div>
+   <div class="fg"><span>&nbsp;</span><button type="button" class="dbtn" id="o-limpar">Limpar filtros</button></div>
+  </div>
+  <div class="tiles" id="o-tiles"></div>
+  <div class="dgrid">
+   <div class="dcard"><h4>Nota média pelo prazo de entrega</h4><p class="sub">Nota média por diferença entre a entrega e a data prometida</p><div class="bars" id="o-faixa"></div></div>
+   <div class="dcard stack2"><h4>Pedidos atrasados × notas ruins</h4><p class="sub">Participação de cada grupo nos pedidos e nas notas 1 e 2</p><div class="legend" id="o-lg"></div><div class="bars" id="o-comp"></div><p class="warn" id="o-comp-t"></p></div>
+   <div class="dcard wide"><h4>Mês a mês</h4><p class="sub" id="o-mes-sub">% de pedidos entregues no prazo (linha) e nota média (pontos) · passe o mouse ou toque para ver o mês</p><div class="dfig" id="o-mes"><svg role="img" aria-label="Evolução mensal da pontualidade e da nota média"></svg></div><p class="sub" id="o-mes-info" style="margin:10px 0 0;min-height:1.4em"></p></div>
+   <div class="dcard"><h4>Estados com pior pontualidade</h4><p class="sub">% de pedidos entregues no prazo · estados com 300+ pedidos no recorte · clique para filtrar</p><div class="bars" id="o-ufs"></div></div>
+   <div class="dcard"><h4>Recompra depois da 1ª compra</h4><p class="sub">% de clientes que voltaram a comprar, pela experiência na 1ª compra</p><div class="bars" id="o-rec"></div><p class="warn" id="o-rec-t"></p></div>
+  </div>
+  <p class="note2">Fonte: Brazilian E-Commerce Public Dataset by Olist (Kaggle), pedidos de jan/2017 a ago/2018, tratados no meu modelo em Power Query e Power Pivot. Nota = 1 avaliação por pedido.</p>
+ </div>
+</div></section>
+
 <section class="band sec"><div class="wrap">
  <h2>O que eu descobri</h2>
 
@@ -108,5 +132,105 @@
 </main>
 
 <footer><div class="wrap">© 2026 Gabriel Leonardelli · Dados: Brazilian E-Commerce Public Dataset by Olist (Kaggle)</div></footer>
+<script src="../dash.js"></script>
+<script>
+{
+ const $=id=>document.getElementById(id);
+ const MESES=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+ const mesTxt=m=>{const [a,b]=m.split('-');return MESES[+b-1]+'/'+a.slice(2)};
+ const REG=['Todas','Norte','Nordeste','Centro-Oeste','Sudeste','Sul'];
+ const st={ini:'2017-01',fim:'2018-08',reg:'Todas',uf:'Todos'};
+ let L=[],F={},meses=[],ufReg={};
+ const g=(r,k)=>r[F[k]];
+ const filtra=(ign)=>L.filter(r=>g(r,'ano_mes')>=st.ini&&g(r,'ano_mes')<=st.fim&&(st.reg==='Todas'||g(r,'regiao_cliente')===st.reg)&&(ign==='uf'||st.uf==='Todos'||g(r,'uf_cliente')===st.uf));
+ function soma(rs,by){const o={};rs.forEach(r=>{const k=by?by(r):'_';const a=o[k]||(o[k]={pedidos:0,notas:0,soma_nota:0,baixas:0,primeiras:0,recompras:0,prazo:0,atraso:0,nao:0,
+   baixas_atraso:0,baixas_nao:0,nota_prazo:0,n_prazo:0,nota_atraso:0,n_atraso:0,prim_prazo:0,rec_prazo:0,prim_atraso:0,rec_atraso:0});
+   const gr=g(r,'grupo'),p=g(r,'pedidos');a.pedidos+=p;a.notas+=g(r,'notas');a.soma_nota+=g(r,'soma_nota');a.baixas+=g(r,'baixas');
+   if(gr==='prazo'){a.prazo+=p;a.nota_prazo+=g(r,'soma_nota');a.n_prazo+=g(r,'notas');a.prim_prazo+=g(r,'primeiras');a.rec_prazo+=g(r,'recompras');}
+   else if(gr==='atraso'){a.atraso+=p;a.baixas_atraso+=g(r,'baixas');a.nota_atraso+=g(r,'soma_nota');a.n_atraso+=g(r,'notas');a.prim_atraso+=g(r,'primeiras');a.rec_atraso+=g(r,'recompras');}
+   else{a.nao+=p;a.baixas_nao+=g(r,'baixas');}});return o;}
+ const pctPrazo=a=>(a.prazo+a.atraso)?a.prazo/(a.prazo+a.atraso)*100:null;
+ const nota=(s,n)=>n?s/n:null;
+ const n1=v=>v==null?'–':D.num(v,1);
+
+ function filtros(){
+  const ms=meses.map(m=>[m,mesTxt(m)]);
+  D.sel($('o-ini'),ms,st.ini,v=>{st.ini=v;if(st.fim<v)st.fim=v;filtros();draw();});
+  D.sel($('o-fim'),ms.filter(([m])=>m>=st.ini),st.fim,v=>{st.fim=v;draw();});
+  D.seg($('o-reg'),REG.map(r=>[r,r]),st.reg,v=>{st.reg=v;if(st.uf!=='Todos'&&ufReg[st.uf]!==v&&v!=='Todas')st.uf='Todos';filtros();draw();});
+  const ufs=Object.keys(ufReg).filter(u=>st.reg==='Todas'||ufReg[u]===st.reg).sort();
+  D.sel($('o-uf'),[['Todos','Todos'],...ufs.map(u=>[u,u])],st.uf,v=>{st.uf=v;draw();});
+ }
+ function tiles(a){
+  const np=nota(a.nota_prazo,a.n_prazo),na=nota(a.nota_atraso,a.n_atraso);
+  const rp=a.prim_prazo?a.rec_prazo/a.prim_prazo*100:null,ra=a.prim_atraso?a.rec_atraso/a.prim_atraso*100:null;
+  const t=[[D.num(a.pedidos),'pedidos no recorte'],[D.pct(pctPrazo(a),1),'entregues no prazo'],
+   [`${n1(np)} → ${n1(na)}`,'nota média: no prazo → com atraso'],
+   [D.pct(a.baixas?a.baixas_atraso/a.baixas*100:null),'das notas 1 e 2 vêm de pedidos atrasados'],
+   [rp&&ra!=null?(ra>=rp?'+':'−')+D.pct(Math.abs(ra/rp-1)*100):'–','de recompra quando a 1ª compra atrasa']];
+  $('o-tiles').innerHTML=t.map(([b,s])=>`<div class="tile"><b>${D.esc(b)}</b><span>${D.esc(s)}</span></div>`).join('');
+ }
+ function faixa(rs){
+  const o=soma(rs.filter(r=>g(r,'faixa')),r=>g(r,'faixa'));
+  const ks=Object.keys(o).sort();
+  D.bars($('o-faixa'),ks.map(k=>{const v=nota(o[k].soma_nota,o[k].notas);return {lab:k.replace(/^\d\. /,''),v:v||0,txt:n1(v),on:k.startsWith('5')||k.startsWith('6')||k.startsWith('7')?false:false,title:`${D.num(o[k].pedidos)} pedidos`}}),{max:5});
+  $('o-faixa').querySelectorAll('.brow').forEach((b,i)=>{if(ks[i]>'4')b.querySelector('.trk i').style.background='var(--orange)'; else b.querySelector('.trk i').style.background='var(--green)';});
+ }
+ function comp(a){
+  const cor={prazo:'var(--green)',atraso:'var(--orange)',nao:'var(--muted)'};
+  $('o-lg').innerHTML=`<span><i style="background:${cor.prazo}"></i>No prazo</span><span><i style="background:${cor.atraso}"></i>Atrasado</span><span><i style="background:${cor.nao}"></i>Não entregue</span>`;
+  const bp=a.baixas-a.baixas_atraso-a.baixas_nao;
+  const linhas=[['Pedidos',[a.prazo,a.atraso,a.nao],a.pedidos],['Notas 1 e 2',[bp,a.baixas_atraso,a.baixas_nao],a.baixas]];
+  $('o-comp').innerHTML=linhas.map(([l,v,t])=>`<div class="brow"><span class="lab">${l}</span><span class="stack">${v.map((x,i)=>{const p=t?x/t*100:0;return `<i style="width:${p}%;background:${Object.values(cor)[i]}" title="${D.pct(p,1)}">${p>=12?D.pct(p):''}</i>`}).join('')}</span></div>`).join('');
+  const pa=a.pedidos?a.atraso/a.pedidos*100:0,ba=a.baixas?a.baixas_atraso/a.baixas*100:0;
+  $('o-comp-t').textContent=`Os pedidos atrasados são ${D.pct(pa)} do total, mas respondem por ${D.pct(ba)} das notas 1 e 2.`;
+ }
+ function mensal(rs){
+  const svg=$('o-mes').querySelector('svg');
+  const o=soma(rs,r=>g(r,'ano_mes')),ks=Object.keys(o).sort();
+  const draw2=()=>{
+   const W=svg.clientWidth,H=svg.clientHeight;if(!W)return;
+   const m={l:42,r:42,t:12,b:26},iw=W-m.l-m.r,ih=H-m.t-m.b;
+   if(ks.length<2){svg.innerHTML=`<text x="${W/2}" y="${H/2}" text-anchor="middle">Escolha pelo menos 2 meses</text>`;return;}
+   const x=i=>m.l+i*iw/(ks.length-1);
+   const ps=ks.map(k=>pctPrazo(o[k])),ns=ks.map(k=>nota(o[k].soma_nota,o[k].notas));
+   const pmin=Math.max(0,Math.floor((Math.min(...ps.filter(v=>v!=null))-5)/10)*10),yP=v=>m.t+ih-(v-pmin)/(100-pmin)*ih;
+   const yN=v=>m.t+ih-(v-1)/4*ih;
+   const pts=ks.map((k,i)=>ps[i]==null?null:`${x(i)},${yP(ps[i])}`).filter(Boolean).join(' ');
+   const step=W<520?Math.ceil(ks.length/5):Math.ceil(ks.length/10);
+   let s='';
+   [pmin,(pmin+100)/2,100].forEach(v=>{s+=`<line x1="${m.l}" x2="${W-m.r}" y1="${yP(v)}" y2="${yP(v)}" stroke="var(--line)"/><text x="${m.l-6}" y="${yP(v)+4}" text-anchor="end">${D.pct(v)}</text>`;});
+   [1,3,5].forEach(v=>s+=`<text x="${W-m.r+6}" y="${yN(v)+4}">${v}★</text>`);
+   ks.forEach((k,i)=>{if(i%step===0)s+=`<text x="${x(i)}" y="${H-6}" text-anchor="middle">${mesTxt(k)}</text>`;});
+   s+=`<polyline points="${pts}" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linejoin="round"/>`;
+   ks.forEach((k,i)=>{if(ns[i]!=null)s+=`<circle cx="${x(i)}" cy="${yN(ns[i])}" r="3.5" fill="var(--orange)"/>`;});
+   ks.forEach((k,i)=>s+=`<rect x="${x(i)-iw/(ks.length-1)/2}" y="${m.t}" width="${iw/(ks.length-1)}" height="${ih}" fill="transparent" data-i="${i}"/>`);
+   svg.innerHTML=s;
+   const info=i=>{$('o-mes-info').textContent=`${mesTxt(ks[i])}: ${D.pct(ps[i],1)} no prazo · nota média ${n1(ns[i])} · ${D.num(o[ks[i]].pedidos)} pedidos`;};
+   svg.onmousemove=svg.onclick=e=>{const t=e.target.closest('rect[data-i]');if(t)info(+t.dataset.i);};
+   let pior=0;ps.forEach((v,i)=>{if(v!=null&&v<ps[pior])pior=i});info(pior);
+  };
+  if(!window._roMes){window._roMes=new ResizeObserver(()=>window._drawMes&&window._drawMes());window._roMes.observe(svg);}
+  window._drawMes=draw2;draw2();
+ }
+ function estados(){
+  const o=soma(filtra('uf'),r=>g(r,'uf_cliente'));
+  const it=Object.entries(o).filter(([,a])=>a.pedidos>=300).map(([u,a])=>({lab:u,key:u,v:pctPrazo(a),txt:D.pct(pctPrazo(a),1),on:st.uf===u,title:`${D.num(a.pedidos)} pedidos · ${D.num(a.atraso)} atrasados`})).sort((a,b)=>a.v-b.v).slice(0,10);
+  D.bars($('o-ufs'),it,{max:100,click:true});
+ }
+ function recompra(a){
+  const rp=a.prim_prazo?a.rec_prazo/a.prim_prazo*100:0,ra=a.prim_atraso?a.rec_atraso/a.prim_atraso*100:0;
+  D.bars($('o-rec'),[{lab:'1ª compra no prazo',v:rp,txt:D.pct(rp,1),title:`${D.num(a.rec_prazo)} de ${D.num(a.prim_prazo)} clientes`},{lab:'1ª compra atrasada',v:ra,txt:D.pct(ra,1),title:`${D.num(a.rec_atraso)} de ${D.num(a.prim_atraso)} clientes`}],{max:Math.max(3,Math.ceil(Math.max(rp,ra)))});
+  {const t=$('o-rec').querySelectorAll('.trk i');if(t[0])t[0].style.background='var(--green)';if(t[1])t[1].style.background='var(--orange)';}
+  $('o-rec-t').textContent=a.prim_atraso<300?`Poucos clientes com 1ª compra atrasada neste recorte (${a.prim_atraso}); trate como indicação.`:'A recompra é baixa em todo o marketplace: cerca de 98% dos clientes compram uma única vez.';
+ }
+ function draw(){const rs=filtra(),a=soma(rs)._||soma([])._||{};if(!rs.length){$('o-tiles').innerHTML='<p class="empty">Nenhum pedido com esses filtros.</p>';return;}
+  tiles(a);faixa(rs);comp(a);mensal(rs);estados();recompra(a);}
+ $('o-ufs').onclick=e=>{const b=e.target.closest('[data-k]');if(!b)return;st.uf=st.uf===b.dataset.k?'Todos':b.dataset.k;filtros();draw();};
+ $('o-limpar').onclick=()=>{Object.assign(st,{ini:meses[0],fim:meses[meses.length-1],reg:'Todas',uf:'Todos'});filtros();draw();};
+ D.load('../dados/olist.json').then(j=>{j.campos.forEach((c,i)=>F[c]=i);L=j.linhas;meses=[...new Set(L.map(r=>g(r,'ano_mes')))].sort();
+  L.forEach(r=>ufReg[g(r,'uf_cliente')]=g(r,'regiao_cliente'));st.ini=meses[0];st.fim=meses[meses.length-1];filtros();draw();}).catch(e=>{console.error(e);D.fail($('dash'));});
+}
+</script>
 </body>
 </html>

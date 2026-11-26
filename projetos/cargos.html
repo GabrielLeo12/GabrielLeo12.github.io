@@ -32,9 +32,31 @@
   <div class="kpi"><b>0,72 × 0,68</b><span>o Analista está mais perto do Cientista do que do Engenheiro</span></div>
   <div class="kpi"><b>35%</b><span>das vagas de Engenheiro são remotas, contra 11% das de Analista</span></div>
  </div>
+ <div class="cta"><a class="btn p" href="#explorar">Explorar o dashboard interativo ↓</a></div>
 </div></header>
 
 <main>
+<section class="band sec" id="explorar"><div class="wrap">
+ <h2>Explore os dados</h2>
+ <div class="dash" id="dash">
+  <p class="lead">Escolha um cargo e compare com outro: o ranking mostra os dois lado a lado e o quadro "O que falta para migrar" calcula, na hora, as skills que mais separam os dois cargos. Também dá para filtrar por senioridade, modelo de trabalho e estado.</p>
+  <div class="filters" id="vc-filtros"></div>
+  <div class="tiles" id="vc-tiles"></div>
+  <div class="dgrid">
+   <div class="dcard"><h4>Skills mais pedidas</h4><p class="sub">% das vagas que citam cada skill · clique em uma skill para ver as vagas</p>
+    <div class="seg" id="vc-cats" style="margin-bottom:14px"></div><div class="legend" id="vc-rleg"></div>
+    <div class="bars" id="vc-rank"></div><button type="button" class="dbtn" id="vc-mais" style="margin-top:12px"></button></div>
+   <div style="display:grid;gap:16px;align-content:start;min-width:0">
+    <div class="dcard"><h4>Onde estão as vagas</h4><p class="sub">Estados com mais vagas neste recorte · clique para filtrar</p><div class="bars" id="vc-uf"></div></div>
+    <div class="dcard"><h4>Modelo de trabalho</h4><p class="sub">% das vagas do recorte</p><div class="bars" id="vc-dist"></div></div>
+   </div>
+   <div class="dcard wide" hidden><h4>O que falta para migrar</h4><p class="sub" id="vc-gapsub"></p><div class="bars" id="vc-gap"></div></div>
+   <div class="dcard wide" id="vc-det"></div>
+  </div>
+  <p class="note2">Fonte: 1.121 vagas do Indeed Brasil, jun–nov/2026. Os links levam ao anúncio original e podem ter expirado. Dados e código no <a href="https://github.com/GabrielLeo12/skills-cargos-dados" target="_blank" rel="noopener">GitHub</a>.</p>
+ </div>
+</div></section>
+
 <section class="band sec"><div class="wrap">
  <h2>O que eu descobri</h2>
 
@@ -104,5 +126,21 @@
 </main>
 
 <footer><div class="wrap">© 2026 Gabriel Leonardelli · Dados: vagas públicas do Indeed Brasil</div></footer>
+<script src="../dash.js"></script>
+<script>
+D.vagas({url:'../dados/cargos.json',
+ cols:{titulo:0,empresa:1,local:2,data:3,link:8,bits:9},
+ main:{key:'cargo',col:4,label:'Cargo',def:'Analista',cmpDef:'Cientista',values:['Analista','Cientista','Engenheiro'],
+  curto:{Analista:'Analista',Cientista:'Cientista',Engenheiro:'Engenheiro'},
+  nomes:{Analista:'Analista de Dados',Cientista:'Cientista de Dados',Engenheiro:'Engenheiro de Dados'}},
+ filters:[{key:'sen',label:'Senioridade',col:5,kind:'seg',all:'Todas',order:['Estágio','Júnior','Pleno','Sênior','Não informado']},
+          {key:'mod',label:'Modelo de trabalho',col:6,kind:'sel',all:'Todos',order:['Remoto','Híbrido','Presencial','Não informado']},
+          {key:'uf',label:'Estado',col:7,kind:'sel',all:'Todos os estados'}],
+ remoto:r=>r[6]==='Remoto',
+ dist:{col:6,order:['Remoto','Híbrido','Presencial','Não informado']},
+ extra:r=>r[5],
+ selDef:'SQL',
+ ids:{root:'dash',filters:'vc-filtros',tiles:'vc-tiles',cats:'vc-cats',rankLeg:'vc-rleg',rank:'vc-rank',mais:'vc-mais',uf:'vc-uf',dist:'vc-dist',gap:'vc-gap',gapSub:'vc-gapsub',det:'vc-det'}});
+</script>
 </body>
 </html>
