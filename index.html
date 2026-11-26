@@ -19,7 +19,7 @@ LAYOUT: topo compacto em uma coluna; grade de 3 cards logo abaixo; depois métod
 :root{color-scheme:light dark;
 --bg:light-dark(#f6f5f1,#111315);--panel:light-dark(#ffffff,#1a1d20);--ink:light-dark(#15171a,#eceae4);
 --muted:light-dark(#5d6068,#a3a6ad);--line:light-dark(#e3e1da,#2a2e33);--track:light-dark(#edebe5,#24282c);
---blue:light-dark(#2a78d6,#5b9bf0);--orange:light-dark(#e2622f,#f08a5d);--green:light-dark(#1a9f6e,#3cc492);
+--blue:light-dark(#2a78d6,#5b9bf0);--orange:light-dark(#e2622f,#f08a5d);--green:light-dark(#1a9f6e,#3cc492);--violet:light-dark(#6d4fd1,#a08cf2);
 --deep:light-dark(#15171a,#0b0c0e)}
 :root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
@@ -29,7 +29,7 @@ a{color:inherit}
 h1,h2,h3{font-family:"Inter Tight",Inter,sans-serif;line-height:1.05;text-wrap:balance;margin:0}
 h1{font-size:clamp(36px,4.6vw,60px);font-weight:700;letter-spacing:-.02em}
 h2{font-size:clamp(26px,3.2vw,36px);font-weight:600;letter-spacing:-.01em}
-h3{font-size:21px;font-weight:600;line-height:1.2}
+h3{font-size:19px;font-weight:600;line-height:1.22}
 p{margin:0}
 .wrap{max-width:1240px;margin:0 auto}
 .band{padding:clamp(40px,6vw,80px) max(5vw,16px)}
@@ -57,18 +57,19 @@ nav a.l:hover{color:var(--ink)}
 .head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 24px;margin-bottom:20px}
 .head p{color:var(--muted);font-size:15px}
 .head h2{font-size:clamp(36px,4.4vw,54px);font-weight:700;letter-spacing:-.02em}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,2vw,24px)}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(14px,1.6vw,22px)}
 .pc{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;text-decoration:none;transition:transform .2s,box-shadow .2s,border-color .2s}
 .pc:hover{transform:translateY(-4px);border-color:var(--c);box-shadow:0 22px 44px -28px rgba(0,0,0,.45)}
 .pc .img{aspect-ratio:16/9;background:#fbfaf7;border-bottom:1px solid var(--line);overflow:hidden}
 .pc .img img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
-.pc .body{display:flex;flex-direction:column;gap:10px;padding:18px 20px 20px;flex:1}
+.pc .body{display:flex;flex-direction:column;gap:10px;padding:16px 18px 18px;flex:1}
 .tag{font-size:13px;font-weight:600;color:var(--c)}
 .pc .q{font-size:15px;color:var(--muted)}
 .nums{display:flex;gap:18px;margin-top:4px}
-.nums b{display:block;font:700 24px/1 "Inter Tight",sans-serif;color:var(--c);white-space:nowrap}
+.nums b{display:block;font:700 22px/1 "Inter Tight",sans-serif;color:var(--c);white-space:nowrap}
 .nums span{display:block;font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.35}
 .nums div{flex:1}
+.new{font-style:normal;font-size:11px;font-weight:700;color:#fff;background:var(--c);border-radius:999px;padding:2px 8px;margin-left:6px;vertical-align:1px}
 .go{margin-top:auto;padding-top:8px;font-weight:600;font-size:15px;color:var(--c)}
 /* método */
 .method{background:var(--deep);color:#eceae4}
@@ -85,10 +86,10 @@ nav a.l:hover{color:var(--ink)}
 .clist a small{font-weight:400;color:var(--muted);font-size:14px;overflow-wrap:anywhere}
 .clist a:hover{border-color:var(--ink)}
 footer{padding:28px max(5vw,16px);border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
-@media(max-width:960px){.grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.grid .pc:last-child{grid-column:1/-1}}
+@media(max-width:1180px){.grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
 @media(max-width:900px){.contact .wrap,.mgrid{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:640px){
- .grid{grid-template-columns:minmax(0,1fr)}.grid .pc:last-child{grid-column:auto}
+ .grid{grid-template-columns:minmax(0,1fr)}
  .chips{display:none}
  nav .wrap{gap:4px 16px}
  nav a.l{font-size:14px}
@@ -131,6 +132,20 @@ footer{padding:28px max(5vw,16px);border-top:1px solid var(--line);font-size:13p
   <p>Clique em um projeto para ver a análise completa, com gráficos e explicações.</p>
  </div>
  <div class="grid">
+
+  <a class="pc" href="projetos/ia.html" style="--c:var(--violet)">
+   <div class="img"><img src="img/ia-capa.webp" width="1400" height="787" alt="Resumo: 1 em cada 3 vagas de dados pede conhecimento em IA."></div>
+   <div class="body">
+    <span class="tag">Brasil × EUA · Python</span>
+    <h3>Quantas vagas de dados já pedem conhecimento em IA?</h3>
+    <p class="q">2.240 vagas de Analista, Cientista e Engenheiro de Dados no Brasil e nos EUA.</p>
+    <div class="nums">
+     <div><b>1 em 3</b><span>vagas de dados pede IA</span></div>
+     <div><b>26% × 18%</b><span>Analista: Brasil × EUA</span></div>
+    </div>
+    <span class="go">Ver projeto →</span>
+   </div>
+  </a>
 
   <a class="pc" href="projetos/olist.html" style="--c:var(--orange)">
    <div class="img"><img src="img/olist-resumo.webp" width="1400" height="787" alt="Os quatro números principais do estudo de caso da Olist."></div>

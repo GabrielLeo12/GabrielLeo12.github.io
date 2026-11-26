@@ -2,7 +2,7 @@
 :root{color-scheme:light dark;
 --bg:light-dark(#f6f5f1,#111315);--panel:light-dark(#ffffff,#1a1d20);--ink:light-dark(#15171a,#eceae4);
 --muted:light-dark(#5d6068,#a3a6ad);--line:light-dark(#e3e1da,#2a2e33);--track:light-dark(#edebe5,#24282c);
---blue:light-dark(#2a78d6,#5b9bf0);--orange:light-dark(#e2622f,#f08a5d);--green:light-dark(#1a9f6e,#3cc492)}
+--blue:light-dark(#2a78d6,#5b9bf0);--orange:light-dark(#e2622f,#f08a5d);--green:light-dark(#1a9f6e,#3cc492);--violet:light-dark(#6d4fd1,#a08cf2)}
 :root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
 html{scroll-behavior:smooth;scroll-padding-top:72px}
