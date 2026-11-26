@@ -11,10 +11,10 @@
 <style>
 /*
 VOICE: calmo e preciso, como as páginas de dados de um bom jornal.
-IDEA: o portfólio se comporta como os próprios relatórios do Gabriel: achado primeiro, número grande, método depois.
-PICTURE: o gráfico de skills do projeto 1 desenhado ao vivo no topo; capturas reais de cada projeto.
+IDEA: nome grande e os três projetos já na primeira tela; detalhes ficam nas páginas de cada projeto.
+PICTURE: as capturas reais de cada projeto, em cards lado a lado.
 COLOUR and TYPE: papel quente, tinta quase preta, o azul/laranja/verde dos gráficos dele; Inter Tight + Inter.
-LAYOUT: topo em duas colunas que empilham no celular; projetos em faixas largas alternadas; contato no fim.
+LAYOUT: topo compacto em uma coluna; grade de 3 cards logo abaixo; depois método e contato.
 */
 :root{color-scheme:light dark;
 --bg:light-dark(#f6f5f1,#111315);--panel:light-dark(#ffffff,#1a1d20);--ink:light-dark(#15171a,#eceae4);
@@ -26,77 +26,57 @@ LAYOUT: topo em duas colunas que empilham no celular; projetos em faixas largas 
 html{scroll-behavior:smooth;scroll-padding-top:72px}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif;overflow-x:clip}
 a{color:inherit}
-h1,h2,h3{font-family:"Inter Tight",Inter,sans-serif;line-height:1.08;text-wrap:balance;margin:0}
-h1{font-size:clamp(38px,6vw,64px);font-weight:700;letter-spacing:-.02em}
-h2{font-size:clamp(28px,3.6vw,40px);font-weight:600;letter-spacing:-.01em}
-h3{font-size:clamp(24px,2.8vw,32px);font-weight:600}
+h1,h2,h3{font-family:"Inter Tight",Inter,sans-serif;line-height:1.05;text-wrap:balance;margin:0}
+h1{font-size:clamp(44px,8vw,96px);font-weight:700;letter-spacing:-.03em}
+h2{font-size:clamp(26px,3.2vw,36px);font-weight:600;letter-spacing:-.01em}
+h3{font-size:21px;font-weight:600;line-height:1.2}
 p{margin:0}
 .wrap{max-width:1240px;margin:0 auto}
-.band{padding:clamp(40px,6vw,88px) max(5vw,16px)}
-/* nav */
+.band{padding:clamp(40px,6vw,80px) max(5vw,16px)}
 nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 nav .wrap{display:flex;align-items:center;gap:8px 24px;flex-wrap:wrap;padding:12px max(5vw,16px)}
 .brand{font:600 17px "Inter Tight",sans-serif;text-decoration:none;margin-right:auto}
 .brand span{color:var(--blue)}
 nav a.l{text-decoration:none;color:var(--muted);font-size:15px;padding:10px 2px}
 nav a.l:hover{color:var(--ink)}
-/* hero */
-.hero .wrap{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:center}
-.role{font-size:18px;color:var(--blue);font-weight:600;margin-bottom:14px}
-.lede{font-size:clamp(17px,1.6vw,19px);color:var(--muted);margin-top:20px;max-width:34em}
-.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+/* topo */
+.hero{padding:clamp(28px,4.5vw,56px) max(5vw,16px) clamp(20px,3vw,36px)}
+.role{font-size:clamp(17px,1.6vw,20px);color:var(--blue);font-weight:600;margin-bottom:10px}
+.lede{font-size:clamp(17px,1.6vw,20px);color:var(--muted);margin-top:18px;max-width:44em}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px;margin-top:24px}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
 .btn{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 20px;border-radius:999px;font-weight:600;font-size:15px;text-decoration:none;border:1.5px solid var(--ink);transition:transform .15s}
 .btn.p{background:var(--ink);color:var(--bg)}
 .btn:hover{transform:translateY(-2px)}
 .btn:focus-visible,a:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
 .btn svg{width:18px;height:18px}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
-.chip{font-size:13px;font-weight:500;padding:6px 12px;border-radius:999px;background:var(--track);color:var(--ink)}
-/* hero chart */
-.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:clamp(20px,3vw,32px);box-shadow:0 1px 0 var(--line),0 18px 40px -24px rgba(0,0,0,.25)}
-.card h4{margin:0;font:600 19px/1.25 "Inter Tight",sans-serif}
-.card .sub{font-size:13px;color:var(--muted);margin-top:4px}
-.bars{margin-top:22px;display:grid;gap:11px}
-.bar{display:grid;grid-template-columns:7.2em minmax(0,1fr) 3em;align-items:center;gap:10px;font-size:14px}
-.bar .n{text-align:right;white-space:nowrap}
-.bar .t{height:22px;background:var(--track);border-radius:5px;overflow:hidden}
-.bar .t i{display:block;height:100%;width:0;background:var(--blue);border-radius:5px;transition:width 1.1s cubic-bezier(.2,.7,.2,1)}
-.bar .v{font-weight:600;font-variant-numeric:tabular-nums}
-.card .src{font-size:13px;color:var(--muted);margin-top:18px;border-top:1px solid var(--line);padding-top:12px}
-.card .src a{color:var(--blue)}
-/* projects */
-.intro{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:12px 40px;margin-bottom:clamp(28px,4vw,48px)}
-.intro p{color:var(--muted);max-width:34em}
-.proj{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(28px,4vw,56px);align-items:center;padding:clamp(28px,4vw,48px) 0;border-top:1px solid var(--line)}
-.proj:nth-child(even) .shot{order:-1}
-.tag{display:inline-block;font-size:13px;font-weight:600;color:var(--c);margin-bottom:12px}
-.q{margin-top:14px;color:var(--muted);font-size:17px}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:18px 20px;margin:26px 0}
-.stat b{display:block;font:700 clamp(24px,2.4vw,32px)/1 "Inter Tight",sans-serif;color:var(--c);white-space:nowrap}
-.stat span{display:block;font-size:13.5px;color:var(--muted);margin-top:8px;line-height:1.4}
-.how{font-size:15px;color:var(--muted)}
-.how strong{color:var(--ink);font-weight:600}
-.tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
-.tools span{font-size:13px;padding:4px 10px;border-radius:6px;border:1px solid var(--line)}
-.links{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:22px}
-.links{align-items:center}
-.links a{font-weight:600;font-size:15px;text-decoration:none;color:var(--c);padding:6px 0;border-bottom:2px solid currentColor}
-.links a.go{background:var(--c);color:#fff;border:0;border-radius:999px;padding:0 20px;min-height:46px;display:inline-flex;align-items:center}
-.links a.gh{color:var(--muted);border-bottom-width:1px;font-weight:500}
-a.tl{text-decoration:none}a.tl:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
-.shot a{display:block}
-.shot{margin:0;background:#fbfaf7;border:1px solid var(--line);border-radius:16px;padding:10px;box-shadow:0 22px 48px -28px rgba(0,0,0,.35)}
-.shot img{display:block;width:100%;height:auto;border-radius:9px;transition:transform .2s}.shot a:hover img{transform:scale(1.01)}
-.shot.tall{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.shot figcaption{grid-column:1/-1;font-size:13px;color:#6a6d73;padding:8px 4px 2px}
-/* method */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:13px;font-weight:500;padding:6px 12px;border-radius:999px;background:var(--track)}
+/* projetos */
+.projects{padding-top:clamp(8px,1.5vw,16px)}
+.head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 24px;margin-bottom:20px}
+.head p{color:var(--muted);font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,2vw,24px)}
+.pc{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;text-decoration:none;transition:transform .2s,box-shadow .2s,border-color .2s}
+.pc:hover{transform:translateY(-4px);border-color:var(--c);box-shadow:0 22px 44px -28px rgba(0,0,0,.45)}
+.pc .img{aspect-ratio:16/9;background:#fbfaf7;border-bottom:1px solid var(--line);overflow:hidden}
+.pc .img img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.pc .body{display:flex;flex-direction:column;gap:10px;padding:18px 20px 20px;flex:1}
+.tag{font-size:13px;font-weight:600;color:var(--c)}
+.pc .q{font-size:15px;color:var(--muted)}
+.nums{display:flex;gap:18px;margin-top:4px}
+.nums b{display:block;font:700 24px/1 "Inter Tight",sans-serif;color:var(--c);white-space:nowrap}
+.nums span{display:block;font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.35}
+.nums div{flex:1}
+.go{margin-top:auto;padding-top:8px;font-weight:600;font-size:15px;color:var(--c)}
+/* método */
 .method{background:var(--deep);color:#eceae4}
 .method h2{color:#fff}
-.method .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,40px);margin-top:clamp(28px,4vw,44px)}
-.method .grid div{border-top:2px solid var(--c);padding-top:18px}
-.method h3{font-size:21px;color:#fff;margin-bottom:10px}
-.method p{color:#b9bcc2;font-size:15.5px}
-/* contact */
+.mgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,40px);margin-top:clamp(24px,3.5vw,40px)}
+.mgrid div{border-top:2px solid var(--c);padding-top:18px}
+.mgrid h3{color:#fff;margin-bottom:10px}
+.mgrid p{color:#b9bcc2;font-size:15.5px}
+/* contato */
 .contact .wrap{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:40px;align-items:end}
 .contact p{color:var(--muted);margin-top:14px;max-width:32em}
 .clist{display:grid;gap:12px}
@@ -104,18 +84,16 @@ a.tl{text-decoration:none}a.tl:hover{text-decoration:underline;text-decoration-t
 .clist a small{font-weight:400;color:var(--muted);font-size:14px;overflow-wrap:anywhere}
 .clist a:hover{border-color:var(--ink)}
 footer{padding:28px max(5vw,16px);border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
-@media(max-width:900px){
- .hero .wrap,.proj,.contact .wrap{grid-template-columns:minmax(0,1fr)}
- .proj:nth-child(even) .shot{order:0}
- .method .grid{grid-template-columns:minmax(0,1fr)}
-}
-@media(max-width:600px){
+@media(max-width:960px){.grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.grid .pc:last-child{grid-column:1/-1}}
+@media(max-width:900px){.contact .wrap,.mgrid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:640px){
+ .grid{grid-template-columns:minmax(0,1fr)}.grid .pc:last-child{grid-column:auto}
+ .chips{display:none}
+ nav .wrap{gap:4px 16px}
  nav a.l{font-size:14px}
- .stats{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px 16px}
- .stat b{font-size:26px}
- .bar{grid-template-columns:6.2em minmax(0,1fr) 2.6em;font-size:13px}
+ nav a.l[href="#metodo"]{display:none}
 }
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bar .t i,.btn{transition:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn,.pc{transition:none}}
 </style>
 </head>
 <body>
@@ -127,11 +105,11 @@ footer{padding:28px max(5vw,16px);border-top:1px solid var(--line);font-size:13p
  <a class="l" href="#contato">Contato</a>
 </div></nav>
 
-<header class="band hero" id="topo"><div class="wrap">
- <div>
-  <p class="role">Analista de Dados</p>
-  <h1>Gabriel Leonardelli</h1>
-  <p class="lede">Pego uma pergunta de negócio, coleto e limpo os dados, valido cada resultado e entrego a resposta em números claros, com recomendações. Trabalho com SQL, Python, Power BI e Excel.</p>
+<header class="hero" id="topo"><div class="wrap">
+ <p class="role">Analista de Dados</p>
+ <h1>Gabriel Leonardelli</h1>
+ <p class="lede">Pego uma pergunta de negócio, coleto e limpo os dados, valido cada resultado e entrego a resposta em números claros, com recomendações. Trabalho com SQL, Python, Power BI e Excel.</p>
+ <div class="row">
   <div class="btns">
    <a class="btn p" href="#projetos">Ver projetos</a>
    <a class="btn" href="https://www.linkedin.com/in/gabriel-leonardelli" target="_blank" rel="noopener">
@@ -140,93 +118,67 @@ footer{padding:28px max(5vw,16px);border-top:1px solid var(--line);font-size:13p
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>GitHub</a>
   </div>
   <div class="chips" aria-label="Ferramentas">
-   <span class="chip">SQL</span><span class="chip">Python · pandas</span><span class="chip">Power BI · DAX</span><span class="chip">Excel · Power Query · Power Pivot</span><span class="chip">matplotlib</span><span class="chip">Regex</span><span class="chip">Git</span>
+   <span class="chip">SQL</span><span class="chip">Python · pandas</span><span class="chip">Power BI · DAX</span><span class="chip">Excel · Power Query · Power Pivot</span>
   </div>
- </div>
- <div class="card" aria-label="Gráfico: skills mais pedidas em vagas de Analista de Dados">
-  <h4>O que as vagas de Analista de Dados pedem</h4>
-  <p class="sub">% das 572 vagas do Indeed Brasil que citam cada skill · jul–nov/2026</p>
-  <div class="bars" id="bars"></div>
-  <p class="src">Do meu projeto <a href="projetos/analista.html">Skills do Analista de Dados</a>. Coleta e análise em Python.</p>
  </div>
 </div></header>
 
 <main>
-<section class="band" id="projetos"><div class="wrap">
- <div class="intro">
+<section class="band projects" id="projetos"><div class="wrap">
+ <div class="head">
   <h2>Projetos</h2>
-  <p>Três estudos completos, do dado bruto à recomendação. O código, as tabelas e a documentação de cada um estão no GitHub.</p>
+  <p>Clique em um projeto para ver a análise completa, com gráficos e explicações.</p>
  </div>
+ <div class="grid">
 
- <article class="proj" id="p-olist" style="--c:var(--orange)">
-  <div>
-   <span class="tag">BI de ponta a ponta · Excel</span>
-   <h3><a class="tl" href="projetos/olist.html">Olist: o que atrasa as entregas e quanto isso custa em satisfação</a></h3>
-   <p class="q">O atraso na entrega derruba a nota do cliente? Onde o problema é maior, e quanto custa em satisfação e recompra? Analisei cerca de 96 mil pedidos de um marketplace brasileiro, entre jan/2017 e ago/2018.</p>
-   <div class="stats">
-    <div class="stat"><b>4,3 → 2,3</b><span>nota média: entrega no prazo contra entrega atrasada</span></div>
-    <div class="stat"><b>7% → 30%</b><span>os 7% de pedidos atrasados geram quase 30% das notas 1 e 2</span></div>
-    <div class="stat"><b>−26%</b><span>de recompra quando a 1ª compra atrasa</span></div>
+  <a class="pc" href="projetos/olist.html" style="--c:var(--orange)">
+   <div class="img"><img src="img/olist-resumo.webp" width="1400" height="787" alt="Os quatro números principais do estudo de caso da Olist."></div>
+   <div class="body">
+    <span class="tag">BI de ponta a ponta · Excel</span>
+    <h3>Olist: o que atrasa as entregas e quanto isso custa em satisfação</h3>
+    <p class="q">96 mil pedidos de um marketplace brasileiro analisados com Power Query, Power Pivot e DAX.</p>
+    <div class="nums">
+     <div><b>4,3 → 2,3</b><span>nota no prazo × com atraso</span></div>
+     <div><b>−26%</b><span>de recompra após atraso</span></div>
+    </div>
+    <span class="go">Ver projeto →</span>
    </div>
-   <p class="how"><strong>Como fiz:</strong> ETL de 9 tabelas em Power Query, modelo estrela no Power Pivot (112 mil linhas, 5 dimensões) e 20 KPIs em DAX. Encontrei e tratei 17 problemas de qualidade nos dados e fechei com 6 recomendações de negócio.</p>
-   <div class="tools"><span>Excel</span><span>Power Query (M)</span><span>Power Pivot</span><span>DAX</span></div>
-   <div class="links">
-    <a class="go" href="projetos/olist.html">Ver projeto completo →</a>
-    <a href="arquivos/olist-estudo-de-caso.pdf" target="_blank" rel="noopener">Estudo de caso (PDF)</a>
-    <a class="gh" href="https://github.com/GabrielLeo12/olist-atrasos-satisfacao" target="_blank" rel="noopener">Código no GitHub</a>
-   </div>
-  </div>
-  <figure class="shot"><a href="projetos/olist.html" tabindex="-1"><img src="img/olist-resumo.webp" width="1400" height="787" alt="Página do estudo de caso com os quatro números principais: nota de 4,3 para 2,3, 7% dos pedidos geram 30% das notas ruins, 62% contra 9% de notas baixas e −26% na recompra."></a></figure>
- </article>
+  </a>
 
- <article class="proj" id="p-cargos" style="--c:var(--green)">
-  <div>
-   <span class="tag">Análise comparativa · Python</span>
-   <h3><a class="tl" href="projetos/cargos.html">Analista × Cientista × Engenheiro de Dados: onde as skills se cruzam</a></h3>
-   <p class="q">O que cada cargo pede, o que os três têm em comum e o que um analista precisa somar para migrar. Comparei 1.121 vagas do Indeed Brasil (jun–nov/2026).</p>
-   <div class="stats">
-    <div class="stat"><b>0,72</b><span>similaridade Analista × Cientista, contra 0,68 com Engenheiro</span></div>
-    <div class="stat"><b>9% → 76%</b><span>Machine Learning: a maior ponte para virar Cientista</span></div>
-    <div class="stat"><b>98%</b><span>das 300 reamostragens confirmam o resultado</span></div>
+  <a class="pc" href="projetos/cargos.html" style="--c:var(--green)">
+   <div class="img"><img src="img/cargos-dashboard.webp" width="1400" height="787" alt="Dashboard comparando as skills de Analista, Cientista e Engenheiro de Dados."></div>
+   <div class="body">
+    <span class="tag">Análise comparativa · Python</span>
+    <h3>Analista × Cientista × Engenheiro de Dados: onde as skills se cruzam</h3>
+    <p class="q">1.121 vagas comparadas para mostrar o que cada cargo pede e como migrar entre eles.</p>
+    <div class="nums">
+     <div><b>1.121</b><span>vagas analisadas</span></div>
+     <div><b>9% → 76%</b><span>Machine Learning: a maior ponte</span></div>
+    </div>
+    <span class="go">Ver projeto →</span>
    </div>
-   <p class="how"><strong>Como fiz:</strong> coleta com 18 buscas, classificação do cargo pelo título com regras de prioridade, 47 skills detectadas por regex, similaridade de cosseno e testes de robustez. Li amostras de cada skill para corrigir os padrões antes de concluir.</p>
-   <div class="tools"><span>Python</span><span>pandas</span><span>Regex</span><span>matplotlib</span><span>Power BI</span></div>
-   <div class="links">
-    <a class="go" href="projetos/cargos.html">Ver projeto completo →</a>
-    <a class="gh" href="https://github.com/GabrielLeo12/skills-cargos-dados" target="_blank" rel="noopener">Código no GitHub</a>
-   </div>
-  </div>
-  <figure class="shot"><a href="projetos/cargos.html" tabindex="-1"><img src="img/cargos-dashboard.webp" width="1400" height="787" alt="Dashboard com as vagas por cargo, a base comum de SQL e Python, a skill característica de cada cargo e a similaridade entre eles."></a></figure>
- </article>
+  </a>
 
- <article class="proj" id="p-analista" style="--c:var(--blue)">
-  <div>
-   <span class="tag">Coleta e análise de vagas · Python</span>
-   <h3><a class="tl" href="projetos/analista.html">Quais skills o mercado pede para Analista de Dados?</a></h3>
-   <p class="q">Coletei e analisei 572 vagas de Analista de Dados e BI, de 420 empresas, para medir quais ferramentas e habilidades mais aparecem e o que muda do Júnior para o Sênior.</p>
-   <div class="stats">
-    <div class="stat"><b>68%</b><span>das vagas pedem SQL, a skill mais citada</span></div>
-    <div class="stat"><b>46% × 43%</b><span>Python já aparece em mais vagas que Excel</span></div>
-    <div class="stat"><b>+20 p.p.</b><span>comunicação: o maior salto do Júnior para o Sênior</span></div>
+  <a class="pc" href="projetos/analista.html" style="--c:var(--blue)">
+   <div class="img"><img src="img/analista-top-skills.webp" width="900" height="1125" alt="Gráfico com as skills mais pedidas em vagas de Analista de Dados."></div>
+   <div class="body">
+    <span class="tag">Coleta e análise de vagas · Python</span>
+    <h3>Quais skills o mercado pede para Analista de Dados?</h3>
+    <p class="q">572 vagas de 420 empresas coletadas e analisadas, do Júnior ao Sênior.</p>
+    <div class="nums">
+     <div><b>68%</b><span>das vagas pedem SQL</span></div>
+     <div><b>46% × 43%</b><span>Python já supera o Excel</span></div>
+    </div>
+    <span class="go">Ver projeto →</span>
    </div>
-   <p class="how"><strong>Como fiz:</strong> pipeline em Python com coleta (JobSpy), limpeza de 4.782 para 572 vagas, classificação de senioridade e busca de 29 skills por regex. Revisei amostras e ajustei o método, como tirar Estatística citada só como curso.</p>
-   <div class="tools"><span>Python</span><span>pandas</span><span>JobSpy</span><span>Regex</span><span>Power BI</span></div>
-   <div class="links">
-    <a class="go" href="projetos/analista.html">Ver projeto completo →</a>
-    <a class="gh" href="https://github.com/GabrielLeo12/skills-analista-dados" target="_blank" rel="noopener">Código no GitHub</a>
-   </div>
-  </div>
-  <figure class="shot tall">
-   <a href="projetos/analista.html" tabindex="-1"><img src="img/analista-top-skills.webp" width="900" height="1125" alt="Gráfico de barras com as 15 skills mais pedidas para Analista de Dados."></a>
-   <a href="projetos/analista.html" tabindex="-1"><img src="img/analista-junior-senior.webp" width="900" height="1125" alt="Gráfico comparando as skills pedidas em vagas Júnior e Sênior."></a>
-   <figcaption>Ranking de skills e a comparação Júnior × Sênior</figcaption>
-  </figure>
- </article>
+  </a>
+
+ </div>
 </div></section>
 
 <section class="band method" id="metodo"><div class="wrap">
  <h2>Como eu trabalho</h2>
- <div class="grid">
+ <div class="mgrid">
   <div style="--c:var(--blue)"><h3>Começo pela pergunta</h3><p>Todo projeto parte de uma pergunta de negócio concreta e termina com uma resposta direta e recomendações que alguém pode colocar em prática.</p></div>
   <div style="--c:var(--orange)"><h3>Desconfio dos dados</h3><p>Documento cada problema de qualidade e confiro os totais de controle. No projeto da Olist, foram 17 problemas tratados antes de qualquer conclusão.</p></div>
   <div style="--c:var(--green)"><h3>Testo o resultado</h3><p>Leio amostras para validar o método e testo se a conclusão se sustenta com outras variações do cálculo. As limitações ficam escritas.</p></div>
@@ -246,15 +198,5 @@ footer{padding:28px max(5vw,16px);border-top:1px solid var(--line);font-size:13p
 </main>
 
 <footer><div class="wrap">© 2026 Gabriel Leonardelli · Dados das análises: Indeed Brasil e Olist (Kaggle)</div></footer>
-
-<script>
-{
- const data=[["SQL",68],["Power BI",63],["Python",46],["Excel",43],["Comunicação",41],["Modelagem",27],["Inglês",23]];
- const el=document.getElementById('bars');
- el.innerHTML=data.map(([k,v])=>`<div class="bar"><span class="n">${k}</span><span class="t"><i data-w="${v}"></i></span><span class="v">${v}%</span></div>`).join('');
- const fill=()=>el.querySelectorAll('i').forEach(i=>i.style.width=i.dataset.w+'%');
- requestAnimationFrame(()=>requestAnimationFrame(fill));
-}
-</script>
 </body>
 </html>
