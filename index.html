@@ -79,9 +79,14 @@ nav a.l:hover{color:var(--ink)}
 .tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
 .tools span{font-size:13px;padding:4px 10px;border-radius:6px;border:1px solid var(--line)}
 .links{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:22px}
+.links{align-items:center}
 .links a{font-weight:600;font-size:15px;text-decoration:none;color:var(--c);padding:6px 0;border-bottom:2px solid currentColor}
+.links a.go{background:var(--c);color:#fff;border:0;border-radius:999px;padding:0 20px;min-height:46px;display:inline-flex;align-items:center}
+.links a.gh{color:var(--muted);border-bottom-width:1px;font-weight:500}
+a.tl{text-decoration:none}a.tl:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+.shot a{display:block}
 .shot{margin:0;background:#fbfaf7;border:1px solid var(--line);border-radius:16px;padding:10px;box-shadow:0 22px 48px -28px rgba(0,0,0,.35)}
-.shot img{display:block;width:100%;height:auto;border-radius:9px}
+.shot img{display:block;width:100%;height:auto;border-radius:9px;transition:transform .2s}.shot a:hover img{transform:scale(1.01)}
 .shot.tall{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .shot figcaption{grid-column:1/-1;font-size:13px;color:#6a6d73;padding:8px 4px 2px}
 /* method */
@@ -142,7 +147,7 @@ footer{padding:28px max(5vw,16px);border-top:1px solid var(--line);font-size:13p
   <h4>O que as vagas de Analista de Dados pedem</h4>
   <p class="sub">% das 572 vagas do Indeed Brasil que citam cada skill · jul–nov/2026</p>
   <div class="bars" id="bars"></div>
-  <p class="src">Do meu projeto <a href="#p-analista">Skills do Analista de Dados</a>. Coleta e análise em Python.</p>
+  <p class="src">Do meu projeto <a href="projetos/analista.html">Skills do Analista de Dados</a>. Coleta e análise em Python.</p>
  </div>
 </div></header>
 
@@ -156,7 +161,7 @@ footer{padding:28px max(5vw,16px);border-top:1px solid var(--line);font-size:13p
  <article class="proj" id="p-olist" style="--c:var(--orange)">
   <div>
    <span class="tag">BI de ponta a ponta · Excel</span>
-   <h3>Olist: o que atrasa as entregas e quanto isso custa em satisfação</h3>
+   <h3><a class="tl" href="projetos/olist.html">Olist: o que atrasa as entregas e quanto isso custa em satisfação</a></h3>
    <p class="q">O atraso na entrega derruba a nota do cliente? Onde o problema é maior, e quanto custa em satisfação e recompra? Analisei cerca de 96 mil pedidos de um marketplace brasileiro, entre jan/2017 e ago/2018.</p>
    <div class="stats">
     <div class="stat"><b>4,3 → 2,3</b><span>nota média: entrega no prazo contra entrega atrasada</span></div>
@@ -166,17 +171,18 @@ footer{padding:28px max(5vw,16px);border-top:1px solid var(--line);font-size:13p
    <p class="how"><strong>Como fiz:</strong> ETL de 9 tabelas em Power Query, modelo estrela no Power Pivot (112 mil linhas, 5 dimensões) e 20 KPIs em DAX. Encontrei e tratei 17 problemas de qualidade nos dados e fechei com 6 recomendações de negócio.</p>
    <div class="tools"><span>Excel</span><span>Power Query (M)</span><span>Power Pivot</span><span>DAX</span></div>
    <div class="links">
-    <a href="https://github.com/GabrielLeo12/olist-atrasos-satisfacao" target="_blank" rel="noopener">Repositório</a>
-    <a href="https://github.com/GabrielLeo12/olist-atrasos-satisfacao/blob/main/Olist_Atrasos_x_Satisfacao_Estudo_de_Casoo.pdf" target="_blank" rel="noopener">Estudo de caso (PDF)</a>
+    <a class="go" href="projetos/olist.html">Ver projeto completo →</a>
+    <a href="arquivos/olist-estudo-de-caso.pdf" target="_blank" rel="noopener">Estudo de caso (PDF)</a>
+    <a class="gh" href="https://github.com/GabrielLeo12/olist-atrasos-satisfacao" target="_blank" rel="noopener">Código no GitHub</a>
    </div>
   </div>
-  <figure class="shot"><img src="img/olist-resumo.webp" width="1400" height="787" alt="Página do estudo de caso com os quatro números principais: nota de 4,3 para 2,3, 7% dos pedidos geram 30% das notas ruins, 62% contra 9% de notas baixas e −26% na recompra."></figure>
+  <figure class="shot"><a href="projetos/olist.html" tabindex="-1"><img src="img/olist-resumo.webp" width="1400" height="787" alt="Página do estudo de caso com os quatro números principais: nota de 4,3 para 2,3, 7% dos pedidos geram 30% das notas ruins, 62% contra 9% de notas baixas e −26% na recompra."></a></figure>
  </article>
 
  <article class="proj" id="p-cargos" style="--c:var(--green)">
   <div>
    <span class="tag">Análise comparativa · Python</span>
-   <h3>Analista × Cientista × Engenheiro de Dados: onde as skills se cruzam</h3>
+   <h3><a class="tl" href="projetos/cargos.html">Analista × Cientista × Engenheiro de Dados: onde as skills se cruzam</a></h3>
    <p class="q">O que cada cargo pede, o que os três têm em comum e o que um analista precisa somar para migrar. Comparei 1.121 vagas do Indeed Brasil (jun–nov/2026).</p>
    <div class="stats">
     <div class="stat"><b>0,72</b><span>similaridade Analista × Cientista, contra 0,68 com Engenheiro</span></div>
@@ -186,16 +192,17 @@ footer{padding:28px max(5vw,16px);border-top:1px solid var(--line);font-size:13p
    <p class="how"><strong>Como fiz:</strong> coleta com 18 buscas, classificação do cargo pelo título com regras de prioridade, 47 skills detectadas por regex, similaridade de cosseno e testes de robustez. Li amostras de cada skill para corrigir os padrões antes de concluir.</p>
    <div class="tools"><span>Python</span><span>pandas</span><span>Regex</span><span>matplotlib</span><span>Power BI</span></div>
    <div class="links">
-    <a href="https://github.com/GabrielLeo12/skills-cargos-dados" target="_blank" rel="noopener">Repositório</a>
+    <a class="go" href="projetos/cargos.html">Ver projeto completo →</a>
+    <a class="gh" href="https://github.com/GabrielLeo12/skills-cargos-dados" target="_blank" rel="noopener">Código no GitHub</a>
    </div>
   </div>
-  <figure class="shot"><img src="img/cargos-dashboard.webp" width="1400" height="787" alt="Dashboard com as vagas por cargo, a base comum de SQL e Python, a skill característica de cada cargo e a similaridade entre eles."></figure>
+  <figure class="shot"><a href="projetos/cargos.html" tabindex="-1"><img src="img/cargos-dashboard.webp" width="1400" height="787" alt="Dashboard com as vagas por cargo, a base comum de SQL e Python, a skill característica de cada cargo e a similaridade entre eles."></a></figure>
  </article>
 
  <article class="proj" id="p-analista" style="--c:var(--blue)">
   <div>
    <span class="tag">Coleta e análise de vagas · Python</span>
-   <h3>Quais skills o mercado pede para Analista de Dados?</h3>
+   <h3><a class="tl" href="projetos/analista.html">Quais skills o mercado pede para Analista de Dados?</a></h3>
    <p class="q">Coletei e analisei 572 vagas de Analista de Dados e BI, de 420 empresas, para medir quais ferramentas e habilidades mais aparecem e o que muda do Júnior para o Sênior.</p>
    <div class="stats">
     <div class="stat"><b>68%</b><span>das vagas pedem SQL, a skill mais citada</span></div>
@@ -205,12 +212,13 @@ footer{padding:28px max(5vw,16px);border-top:1px solid var(--line);font-size:13p
    <p class="how"><strong>Como fiz:</strong> pipeline em Python com coleta (JobSpy), limpeza de 4.782 para 572 vagas, classificação de senioridade e busca de 29 skills por regex. Revisei amostras e ajustei o método, como tirar Estatística citada só como curso.</p>
    <div class="tools"><span>Python</span><span>pandas</span><span>JobSpy</span><span>Regex</span><span>Power BI</span></div>
    <div class="links">
-    <a href="https://github.com/GabrielLeo12/skills-analista-dados" target="_blank" rel="noopener">Repositório</a>
+    <a class="go" href="projetos/analista.html">Ver projeto completo →</a>
+    <a class="gh" href="https://github.com/GabrielLeo12/skills-analista-dados" target="_blank" rel="noopener">Código no GitHub</a>
    </div>
   </div>
   <figure class="shot tall">
-   <img src="img/analista-top-skills.webp" width="900" height="1125" alt="Gráfico de barras com as 15 skills mais pedidas para Analista de Dados.">
-   <img src="img/analista-junior-senior.webp" width="900" height="1125" alt="Gráfico comparando as skills pedidas em vagas Júnior e Sênior.">
+   <a href="projetos/analista.html" tabindex="-1"><img src="img/analista-top-skills.webp" width="900" height="1125" alt="Gráfico de barras com as 15 skills mais pedidas para Analista de Dados."></a>
+   <a href="projetos/analista.html" tabindex="-1"><img src="img/analista-junior-senior.webp" width="900" height="1125" alt="Gráfico comparando as skills pedidas em vagas Júnior e Sênior."></a>
    <figcaption>Ranking de skills e a comparação Júnior × Sênior</figcaption>
   </figure>
  </article>

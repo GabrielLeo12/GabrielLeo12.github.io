@@ -1,0 +1,80 @@
+/* Páginas de projeto: mesma identidade da página inicial (papel quente, tinta escura, azul/laranja/verde, Inter Tight + Inter). */
+:root{color-scheme:light dark;
+--bg:light-dark(#f6f5f1,#111315);--panel:light-dark(#ffffff,#1a1d20);--ink:light-dark(#15171a,#eceae4);
+--muted:light-dark(#5d6068,#a3a6ad);--line:light-dark(#e3e1da,#2a2e33);--track:light-dark(#edebe5,#24282c);
+--blue:light-dark(#2a78d6,#5b9bf0);--orange:light-dark(#e2622f,#f08a5d);--green:light-dark(#1a9f6e,#3cc492)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 Inter,system-ui,sans-serif;overflow-x:clip}
+a{color:inherit}
+h1,h2,h3{font-family:"Inter Tight",Inter,sans-serif;line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(34px,5vw,56px);font-weight:700;letter-spacing:-.02em}
+h2{font-size:clamp(26px,3.2vw,36px);font-weight:600;letter-spacing:-.01em}
+h3{font-size:20px;font-weight:600}
+p{margin:0}
+.wrap{max-width:1100px;margin:0 auto}
+.band{padding:clamp(36px,5vw,72px) max(5vw,16px)}
+nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{max-width:1240px;display:flex;align-items:center;gap:8px 24px;flex-wrap:wrap;padding:12px max(5vw,16px)}
+.brand{font:600 17px "Inter Tight",sans-serif;text-decoration:none;margin-right:auto}
+.brand span{color:var(--blue)}
+nav a.l{text-decoration:none;color:var(--muted);font-size:15px;padding:10px 2px}
+nav a.l:hover{color:var(--ink)}
+a:focus-visible,.btn:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+/* cabeçalho */
+.tag{display:inline-block;font-size:14px;font-weight:600;color:var(--c);margin-bottom:14px}
+.lede{font-size:clamp(18px,1.8vw,21px);color:var(--muted);margin-top:18px;max-width:40em}
+.meta{display:flex;flex-wrap:wrap;gap:10px 32px;margin-top:26px;font-size:15px;color:var(--muted)}
+.meta b{display:block;color:var(--ink);font-weight:600}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:clamp(28px,4vw,44px)}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 22px}
+.kpi b{display:block;font:700 clamp(28px,3vw,38px)/1 "Inter Tight",sans-serif;color:var(--c);white-space:nowrap}
+.kpi span{display:block;font-size:15px;color:var(--muted);margin-top:10px;line-height:1.45}
+/* corpo */
+.sec{border-top:1px solid var(--line)}
+.sec>.wrap>h2{margin-bottom:clamp(20px,3vw,32px)}
+.finding{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,4vw,48px);align-items:center;padding:clamp(20px,3vw,32px) 0}
+.finding+.finding{border-top:1px dashed var(--line)}
+.finding .n{font:700 15px "Inter Tight",sans-serif;color:var(--c);margin-bottom:8px}
+.finding h3{font-size:clamp(21px,2.2vw,26px);margin-bottom:12px}
+.finding p{color:var(--muted)}
+.finding p strong{color:var(--ink)}
+.finding.solo{grid-template-columns:minmax(0,1fr)}
+.shot{margin:0;background:#fbfaf7;border:1px solid var(--line);border-radius:14px;padding:8px;box-shadow:0 18px 40px -26px rgba(0,0,0,.35)}
+.shot img{display:block;width:100%;height:auto;border-radius:8px}
+.shot.portrait{max-width:520px;justify-self:center;width:100%}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.list{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.item{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+.item h3{font-size:18px;margin-bottom:8px}
+.item p{font-size:15.5px;color:var(--muted)}
+.item .k{font:700 14px "Inter Tight",sans-serif;color:var(--c);display:block;margin-bottom:6px}
+.steps{display:grid;gap:0;counter-reset:s}
+.steps li{list-style:none;display:grid;grid-template-columns:44px minmax(0,1fr);gap:16px;padding:18px 0;border-top:1px solid var(--line)}
+.steps li::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--c);color:#fff;font:600 15px "Inter Tight",sans-serif}
+.steps{padding:0;margin:0}
+.steps b{display:block;margin-bottom:4px}
+.steps span{color:var(--muted);font-size:16px}
+.note{font-size:15.5px;color:var(--muted);margin-top:22px;max-width:52em}
+ul.plain{margin:0;padding-left:20px;color:var(--muted)}
+ul.plain li{margin:6px 0}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{font-weight:600}
+td.r,th.r{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.scroll{overflow-x:auto}
+/* rodapé do projeto */
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 20px;border-radius:999px;font-weight:600;font-size:15px;text-decoration:none;border:1.5px solid var(--ink)}
+.btn.p{background:var(--ink);color:var(--bg)}
+.btn svg{width:18px;height:18px}
+.next{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:clamp(32px,5vw,56px);padding:22px 24px;border:1px solid var(--line);border-radius:16px;background:var(--panel);text-decoration:none}
+.next small{display:block;color:var(--muted);font-size:14px}
+.next b{font:600 19px "Inter Tight",sans-serif}
+.next:hover{border-color:var(--ink)}
+footer{padding:28px max(5vw,16px);border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+footer .wrap{max-width:1240px}
+@media(max-width:820px){.finding{grid-template-columns:minmax(0,1fr)}.finding .shot{order:2}}
+@media(max-width:560px){.pair{grid-template-columns:minmax(0,1fr)}.kpis{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.kpi{padding:16px}.kpi b{font-size:26px;white-space:normal}body{font-size:16px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
