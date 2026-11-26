@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Olist: atrasos e satisfação · Gabriel Leonardelli</title>
+<meta name="description" content="Estudo de caso de BI: como o atraso na entrega afeta a satisfação e a recompra dos clientes da Olist.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../projeto.css">
+</head>
+<body style="--c:var(--orange)">
+
+<nav><div class="wrap">
+ <a class="brand" href="../index.html">Gabriel Leonardelli<span>.</span></a>
+ <a class="l" href="../index.html#projetos">← Todos os projetos</a>
+ <a class="l" href="../index.html#contato">Contato</a>
+</div></nav>
+
+<header class="band"><div class="wrap">
+ <span class="tag">Estudo de caso · Business Intelligence</span>
+ <h1>Olist: o que atrasa as entregas e quanto isso custa em satisfação</h1>
+ <p class="lede">O atraso na entrega derruba a nota de avaliação do cliente? Em quais estados, períodos e vendedores o problema é maior, e quanto ele custa em satisfação e recompra?</p>
+ <div class="meta">
+  <div><b>Dados</b>Base pública da Olist (Kaggle), marketplace brasileiro</div>
+  <div><b>Período</b>Jan/2017 a ago/2018 · ~96 mil pedidos</div>
+  <div><b>Ferramentas</b>Excel · Power Query · Power Pivot · DAX</div>
+ </div>
+ <div class="kpis">
+  <div class="kpi"><b>4,3 → 2,3</b><span>Nota média de quem recebeu no prazo contra quem recebeu com atraso</span></div>
+  <div class="kpi"><b>7% → 30%</b><span>Só 7% dos pedidos atrasam, mas geram quase 30% das notas 1 e 2</span></div>
+  <div class="kpi"><b>4º dia</b><span>A partir do 4º dia de atraso, a nota despenca para cerca de 2</span></div>
+  <div class="kpi"><b>−26%</b><span>de recompra entre quem teve a 1ª compra atrasada</span></div>
+ </div>
+</div></header>
+
+<main>
+<section class="band sec"><div class="wrap">
+ <h2>O que eu descobri</h2>
+
+ <div class="finding">
+  <div>
+   <p class="n">1 · Tolerância do cliente</p>
+   <h3>O cliente tolera até 3 dias de atraso</h3>
+   <p>Entregar antes do prazo quase não muda a nota: ela fica entre 4,2 e 4,3. Com até 3 dias de atraso, a nota cai para cerca de 3,3. <strong>Do 4º dia em diante, cai para perto de 2.</strong> A janela para agir é curta: o cliente precisa ser avisado e compensado antes do 4º dia.</p>
+  </div>
+  <figure class="shot"><img src="../img/olist-tolerancia.webp" width="1400" height="716" alt="Gráfico de barras da nota média por dias de diferença entre a entrega e a data prometida: 4,3 entregando antes, 3,3 com 1 a 3 dias de atraso e cerca de 2 a partir do 4º dia."></figure>
+ </div>
+
+ <div class="finding">
+  <div>
+   <p class="n">2 · Sazonalidade</p>
+   <h3>Nos picos de demanda, a pontualidade cai e a nota cai junto</h3>
+   <p>Na Black Friday de 2017, a pontualidade caiu para 87,6%. Em março de 2018, chegou ao pior nível do período, <strong>81,0%</strong>, e a nota média foi a mais baixa da série. Quando a operação se normalizou, a nota voltou.</p>
+  </div>
+  <figure class="shot"><img src="../img/olist-sazonalidade.webp" width="1400" height="716" alt="Dois gráficos de linha mensais: percentual de pedidos no prazo e nota média, ambos com quedas em novembro de 2017 e março de 2018."></figure>
+ </div>
+
+ <div class="finding">
+  <div>
+   <p class="n">3 · Geografia</p>
+   <h3>Nordeste e Rio de Janeiro concentram os piores índices</h3>
+   <p>Seis dos sete piores estados em pontualidade são do Nordeste. O Rio de Janeiro tem quase tantos pedidos atrasados quanto São Paulo com um terço do volume, por isso é a prioridade pelo número absoluto de clientes afetados.</p>
+  </div>
+  <figure class="shot"><img src="../img/olist-estados.webp" width="1400" height="716" alt="Ranking dos 10 estados com menor percentual de pedidos entregues no prazo, com destaque para o Nordeste."></figure>
+ </div>
+
+ <div class="finding">
+  <div>
+   <p class="n">4 · Transporte e vendedores</p>
+   <h3>A maior parte do atraso é do transporte, mas os vendedores também pesam</h3>
+   <p>Nos pedidos atrasados, o vendedor postou fora do prazo <strong>3,7 vezes mais</strong> (27,7% contra 7,6%). Classifiquei os 625 vendedores com mais de 30 pedidos, e <strong>69 ficaram em "ação imediata"</strong>.</p>
+  </div>
+  <figure class="shot"><img src="../img/olist-custo.webp" width="1400" height="716" alt="Comparação de postagem fora do prazo entre pedidos no prazo e atrasados, classificação dos 625 vendedores e o custo do atraso."></figure>
+ </div>
+</div></section>
+
+<section class="band sec"><div class="wrap">
+ <h2>O que eu recomendo</h2>
+ <div class="list">
+  <div class="item"><span class="k">1</span><h3>SLA de postagem para vendedores</h3><p>Acompanhar a postagem dentro do prazo e abrir plano de ação com os 69 vendedores classificados como "ação imediata".</p></div>
+  <div class="item"><span class="k">2</span><h3>Revisar a logística do Nordeste e do RJ</h3><p>Negociar SLA e transportadora por rota nas regiões com pior pontualidade.</p></div>
+  <div class="item"><span class="k">3</span><h3>Plano de capacidade para os picos</h3><p>Preparar a operação para a Black Friday e o 1º trimestre, quando a pontualidade mais cai.</p></div>
+  <div class="item"><span class="k">4</span><h3>Comunicação antes do 4º dia</h3><p>Avisar o cliente e oferecer compensação enquanto o atraso ainda é curto.</p></div>
+  <div class="item"><span class="k">5</span><h3>Calibrar o prazo prometido</h3><p>A Olist promete cerca de 24 dias e entrega em cerca de 12. Prazos mais realistas por rota podem melhorar a conversão.</p></div>
+  <div class="item"><span class="k">6</span><h3>Retenção depois da 1ª compra</h3><p>Cerca de 98% dos clientes compram uma única vez, então a primeira experiência pesa muito.</p></div>
+ </div>
+</div></section>
+
+<section class="band sec"><div class="wrap">
+ <h2>Como eu fiz</h2>
+ <ol class="steps">
+  <li><div><b>ETL no Power Query</b><span>Integração das 9 tabelas da base, padronização e agregações. Recorte de jan/2017 a ago/2018 para evitar meses incompletos.</span></div></li>
+  <li><div><b>Modelo estrela no Power Pivot</b><span>Uma tabela fato de itens de pedido (112 mil linhas) e 5 dimensões: calendário, cliente, produto, vendedor e geografia.</span></div></li>
+  <li><div><b>20 KPIs em DAX</b><span>% no prazo, nota média, % de notas 1 e 2, faturamento em risco, taxa de recompra, variação mensal e acumulado no ano, entre outros.</span></div></li>
+  <li><div><b>Qualidade dos dados</b><span>17 problemas encontrados, documentados e tratados. Por exemplo, os pagamentos parcelados inflariam o faturamento em 4,5%, e o ID do cliente muda a cada pedido. Os 7 totais de controle do ETL conferem.</span></div></li>
+  <li><div><b>Dashboard e análises no Excel</b><span>Dashboard executivo com filtros de estado, categoria e período, além de abas de logística, vendedores, clientes e qualidade de dados.</span></div></li>
+ </ol>
+ <figure class="shot" style="margin-top:24px"><img src="../img/olist-metodo.webp" width="1400" height="716" alt="Fluxo do projeto, dos dados brutos ao dashboard, e alguns dos 17 problemas de qualidade encontrados."></figure>
+
+ <div class="cta">
+  <a class="btn p" href="../arquivos/olist-estudo-de-caso.pdf" target="_blank" rel="noopener">Abrir o estudo de caso (PDF, 8 páginas)</a>
+  <a class="btn" href="https://github.com/GabrielLeo12/olist-atrasos-satisfacao" target="_blank" rel="noopener">Ver planilha e arquivos no GitHub</a>
+ </div>
+
+ <a class="next" href="cargos.html"><span><small>Próximo projeto</small><b>Analista × Cientista × Engenheiro de Dados</b></span><span aria-hidden="true">→</span></a>
+</div></section>
+</main>
+
+<footer><div class="wrap">© 2026 Gabriel Leonardelli · Dados: Brazilian E-Commerce Public Dataset by Olist (Kaggle)</div></footer>
+</body>
+</html>

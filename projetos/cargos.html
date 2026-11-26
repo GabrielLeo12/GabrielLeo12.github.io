@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Analista × Cientista × Engenheiro · Gabriel Leonardelli</title>
+<meta name="description" content="Comparação das skills pedidas em 1.121 vagas de Analista, Cientista e Engenheiro de Dados no Brasil.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../projeto.css">
+</head>
+<body style="--c:var(--green)">
+
+<nav><div class="wrap">
+ <a class="brand" href="../index.html">Gabriel Leonardelli<span>.</span></a>
+ <a class="l" href="../index.html#projetos">← Todos os projetos</a>
+ <a class="l" href="../index.html#contato">Contato</a>
+</div></nav>
+
+<header class="band"><div class="wrap">
+ <span class="tag">Análise comparativa · Python</span>
+ <h1>Analista × Cientista × Engenheiro de Dados: onde as skills se cruzam</h1>
+ <p class="lede">O que cada cargo de dados pede, o que os três têm em comum e o que um analista precisa aprender para migrar para Ciência ou Engenharia de Dados.</p>
+ <div class="meta">
+  <div><b>Dados</b>1.121 vagas do Indeed Brasil, coletadas por mim</div>
+  <div><b>Período</b>Jun a nov/2026</div>
+  <div><b>Ferramentas</b>Python · pandas · Regex · matplotlib · Power BI</div>
+ </div>
+ <div class="kpis">
+  <div class="kpi"><b>1.121</b><span>vagas: 723 de Analista, 170 de Cientista e 228 de Engenheiro</span></div>
+  <div class="kpi"><b>SQL + Python</b><span>as únicas skills pedidas em pelo menos 40% das vagas dos três cargos</span></div>
+  <div class="kpi"><b>0,72 × 0,68</b><span>o Analista está mais perto do Cientista do que do Engenheiro</span></div>
+  <div class="kpi"><b>35%</b><span>das vagas de Engenheiro são remotas, contra 11% das de Analista</span></div>
+ </div>
+</div></header>
+
+<main>
+<section class="band sec"><div class="wrap">
+ <h2>O que eu descobri</h2>
+
+ <div class="finding">
+  <div>
+   <p class="n">1 · Visão geral</p>
+   <h3>Cada cargo tem uma "assinatura"</h3>
+   <p>SQL e Python formam a base comum. Fora disso, cada cargo tem a sua marca: <strong>Power BI</strong> aparece em 63% das vagas de Analista, <strong>Machine Learning</strong> em 76% das de Cientista e <strong>Data Lake</strong> em 56% das de Engenheiro.</p>
+  </div>
+  <figure class="shot"><img src="../img/cargos-dashboard.webp" width="1400" height="787" alt="Dashboard com o número de vagas por cargo, a base comum de SQL e Python, a skill característica de cada cargo e a similaridade entre eles."></figure>
+ </div>
+
+ <div class="finding">
+  <div>
+   <p class="n">2 · O mapa completo</p>
+   <h3>As skills agrupadas pelo cargo que mais pede cada uma</h3>
+   <p>O que é só do Analista: Power BI (42 pontos percentuais acima da média dos outros dois cargos) e Excel (40 p.p. acima). Do Cientista: Machine Learning e Estatística. Do Engenheiro: Data Lake, Spark, ETL e CI/CD.</p>
+  </div>
+  <figure class="shot portrait"><img src="../img/cargos-heatmap.webp" width="900" height="1125" alt="Mapa de calor com o percentual de vagas que citam cada skill, por cargo."></figure>
+ </div>
+
+ <div class="finding">
+  <div>
+   <p class="n">3 · Como migrar</p>
+   <h3>O que o Analista precisa somar</h3>
+   <p><strong>Para virar Cientista</strong>, as maiores lacunas são Machine Learning (de 9% para 76% das vagas), Estatística (19% → 58%) e Python (46% → 82%).</p>
+   <p style="margin-top:10px"><strong>Para virar Engenheiro</strong>, são Spark (4% → 53%), Data Lake (9% → 56%) e CI/CD (2% → 47%).</p>
+  </div>
+  <figure class="shot portrait"><img src="../img/cargos-pontes.webp" width="900" height="1125" alt="Gráfico mostrando a diferença entre Analista e Cientista e entre Analista e Engenheiro nas 5 skills com maior lacuna."></figure>
+ </div>
+
+ <div class="finding solo">
+  <div>
+   <p class="n">4 · Proximidade entre os cargos</p>
+   <h3>Quem está mais perto de quem</h3>
+   <p>Calculei a similaridade de cosseno entre os perfis de skills (de 0 a 1). O resultado de que o Analista está mais perto do Cientista <strong>se manteve em 4 variações do cálculo e em 98% de 300 reamostragens</strong> das vagas.</p>
+   <div class="scroll" style="margin-top:16px;max-width:560px">
+    <table>
+     <thead><tr><th>Par de cargos</th><th class="r">Similaridade</th></tr></thead>
+     <tbody>
+      <tr><td>Cientista × Engenheiro</td><td class="r">0,73</td></tr>
+      <tr><td>Analista × Cientista</td><td class="r">0,72</td></tr>
+      <tr><td>Analista × Engenheiro</td><td class="r">0,68</td></tr>
+     </tbody>
+    </table>
+   </div>
+  </div>
+ </div>
+</div></section>
+
+<section class="band sec"><div class="wrap">
+ <h2>Como eu fiz</h2>
+ <ol class="steps">
+  <li><div><b>Coleta</b><span>18 buscas no Indeed Brasil com termos de cada cargo e níveis júnior, pleno e sênior, somadas aos dados do meu projeto anterior (só para Analista).</span></div></li>
+  <li><div><b>Limpeza e classificação</b><span>De 15.133 vagas coletadas para 1.121. Classifiquei o cargo pelo título com regras de prioridade e excluí 88 cargos híbridos (AI Engineer, Analytics Engineer, MLOps etc.) que misturariam as áreas.</span></div></li>
+  <li><div><b>Validação</b><span>Li amostras de trechos de cada skill e de títulos de cada cargo. Isso corrigiu padrões, por exemplo "snowflake schema" sendo contado como a plataforma Snowflake.</span></div></li>
+  <li><div><b>Análise</b><span>47 skills detectadas por expressões regulares, perfil por cargo, base comum, skills características, similaridade de cosseno e testes de robustez.</span></div></li>
+ </ol>
+ <p class="note"><strong>Limitações:</strong> uma única fonte (Indeed Brasil); a amostra de Cientista é pequena (170 vagas); o título nem sempre reflete o trabalho real; e a busca por palavras não diferencia "obrigatório" de "diferencial".</p>
+
+ <div class="cta">
+  <a class="btn" href="https://github.com/GabrielLeo12/skills-cargos-dados" target="_blank" rel="noopener">Ver o código no GitHub</a>
+ </div>
+
+ <a class="next" href="analista.html"><span><small>Próximo projeto</small><b>Quais skills o mercado pede para Analista de Dados?</b></span><span aria-hidden="true">→</span></a>
+</div></section>
+</main>
+
+<footer><div class="wrap">© 2026 Gabriel Leonardelli · Dados: vagas públicas do Indeed Brasil</div></footer>
+</body>
+</html>

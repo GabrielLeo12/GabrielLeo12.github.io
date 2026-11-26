@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skills do Analista de Dados · Gabriel Leonardelli</title>
+<meta name="description" content="Análise de 572 vagas de Analista de Dados e BI no Brasil: as skills mais pedidas e o que muda do Júnior para o Sênior.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../projeto.css">
+</head>
+<body style="--c:var(--blue)">
+
+<nav><div class="wrap">
+ <a class="brand" href="../index.html">Gabriel Leonardelli<span>.</span></a>
+ <a class="l" href="../index.html#projetos">← Todos os projetos</a>
+ <a class="l" href="../index.html#contato">Contato</a>
+</div></nav>
+
+<header class="band"><div class="wrap">
+ <span class="tag">Coleta e análise de vagas · Python</span>
+ <h1>Quais skills o mercado pede para Analista de Dados?</h1>
+ <p class="lede">Coletei e analisei as vagas de Analista de Dados e BI publicadas no Brasil para descobrir quais ferramentas e habilidades aparecem com mais frequência e o que muda do Júnior para o Sênior.</p>
+ <div class="meta">
+  <div><b>Dados</b>572 vagas de 420 empresas, Indeed Brasil</div>
+  <div><b>Período</b>24/jul a 21/nov/2026</div>
+  <div><b>Ferramentas</b>Python · pandas · JobSpy · Regex · matplotlib · Power BI</div>
+ </div>
+ <div class="kpis">
+  <div class="kpi"><b>68%</b><span>das vagas pedem SQL, a skill mais pedida</span></div>
+  <div class="kpi"><b>63%</b><span>pedem Power BI, a ferramenta de visualização dominante</span></div>
+  <div class="kpi"><b>46% × 43%</b><span>Python já aparece em mais vagas que Excel</span></div>
+  <div class="kpi"><b>11%</b><span>das vagas são marcadas como remotas</span></div>
+ </div>
+</div></header>
+
+<main>
+<section class="band sec"><div class="wrap">
+ <h2>O que eu descobri</h2>
+
+ <div class="finding">
+  <div>
+   <p class="n">1 · O ranking</p>
+   <h3>SQL e Power BI lideram, e Python já passou o Excel</h3>
+   <p>SQL aparece em 68% das vagas e Power BI em 63%. Tableau (14%) e Looker (12%) ficam bem atrás. <strong>Comunicação</strong> é citada em 41% das vagas e é a skill comportamental mais pedida.</p>
+  </div>
+  <figure class="shot portrait"><img src="../img/analista-top-skills.webp" width="900" height="1125" alt="Gráfico de barras com as 15 skills mais pedidas em vagas de Analista de Dados, liderado por SQL (68%) e Power BI (63%)."></figure>
+ </div>
+
+ <div class="finding">
+  <div>
+   <p class="n">2 · Júnior × Sênior</p>
+   <h3>Com a senioridade, cresce a comunicação e cai o Excel</h3>
+   <p><strong>Comunicação</strong> tem o maior salto: de 27% das vagas júnior para 47% das sênior (+20 p.p.). SQL (+17 p.p.) e Modelagem de dados (+16 p.p.) também crescem.</p>
+   <p style="margin-top:10px">O <strong>Excel</strong> faz o caminho inverso: aparece em 53% das vagas júnior e em 38% das sênior. Já o Power BI fica estável em todos os níveis.</p>
+  </div>
+  <figure class="shot portrait"><img src="../img/analista-junior-senior.webp" width="900" height="1125" alt="Gráfico comparando o percentual de vagas Júnior e Sênior que citam cada skill."></figure>
+ </div>
+</div></section>
+
+<section class="band sec"><div class="wrap">
+ <h2>Como eu fiz</h2>
+ <ol class="steps">
+  <li><div><b>Coleta</b><span>Busca automatizada no Indeed Brasil com 7 termos ("analista de dados", "data analyst", "analista de BI", "business intelligence" e variações por nível), usando a biblioteca JobSpy.</span></div></li>
+  <li><div><b>Limpeza</b><span>Remoção de vagas repetidas, filtro pelo título para manter só Analista de Dados/BI e classificação da senioridade.</span></div></li>
+  <li><div><b>Análise</b><span>Busca de 29 skills na descrição de cada vaga com expressões regulares e cálculo do percentual de vagas que citam cada uma.</span></div></li>
+ </ol>
+
+ <div class="scroll" style="margin-top:24px;max-width:560px">
+  <table>
+   <thead><tr><th>Funil da limpeza</th><th class="r">Vagas</th></tr></thead>
+   <tbody>
+    <tr><td>Coletadas (com repetidas)</td><td class="r">4.782</td></tr>
+    <tr><td>Sem repetidas</td><td class="r">3.611</td></tr>
+    <tr><td>Só Analista de Dados / BI</td><td class="r">572</td></tr>
+   </tbody>
+  </table>
+ </div>
+
+ <h3 style="margin-top:36px;margin-bottom:12px">Decisões de método</h3>
+ <ul class="plain">
+  <li><strong>Indicadores / KPIs ficou fora do ranking:</strong> a palavra aparece em 68% das vagas, mas quase sempre como tarefa ("monitorar indicadores"), não como ferramenta.</li>
+  <li><strong>Estatística sem contar formação acadêmica:</strong> muitas vagas citam estatística só como curso. Descartando essas menções, o percentual caiu de 42% para 19%.</li>
+ </ul>
+ <p class="note"><strong>Limitações:</strong> uma única fonte e 4 meses de dados; a busca por palavras não diferencia "Python é um diferencial" de "Python obrigatório"; 192 vagas não informam o nível.</p>
+
+ <div class="cta">
+  <a class="btn" href="https://github.com/GabrielLeo12/skills-analista-dados" target="_blank" rel="noopener">Ver o código no GitHub</a>
+ </div>
+
+ <a class="next" href="olist.html"><span><small>Próximo projeto</small><b>Olist: o que atrasa as entregas e quanto isso custa</b></span><span aria-hidden="true">→</span></a>
+</div></section>
+</main>
+
+<footer><div class="wrap">© 2026 Gabriel Leonardelli · Dados: vagas públicas do Indeed Brasil</div></footer>
+</body>
+</html>
